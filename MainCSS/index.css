@@ -1,0 +1,83 @@
+  .search-container{
+    padding: 10px 20px 10px 10px;
+    display: flex;
+    direction: row;
+    justify-content: space-between;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: rgb(230,62,17);
+  }
+
+  .search-bar{
+    border-style: none;
+    width: 100%;
+    font-size: 1rem;
+    justify-content: center;
+    margin: 0 1em 0 1em;
+  }
+
+  .search-icon{
+    width: 80px;
+    min-width: 50px;
+    background-image: url("../StemaPics/search-icon.png");
+    background-size: 100% 100%;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .scan-icon{
+    width: 150px;
+    min-width: 50px;
+    cursor: pointer;
+  }
+
+  .nutri-score-container{
+    padding: 30px 50px 0 50px;
+  }
+
+  .nutri-score-img{
+      max-width: 100%;
+      max-height: 100%;
+      min-width: 240px;
+      margin-bottom: 30px;
+  }
+
+  .nutri-score-explanation{
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      gap: 10px 15px;
+      padding-left: 20px;
+  }
+
+  .nutri-score-letters{
+      font-weight: bold;
+      font-size: 2.5rem;
+      white-space: nowrap;
+  }
+
+  .nutri-score-descr{
+      font-size: 1rem;
+      white-space: nowrap;
+  }
+
+  @media screen and (min-width: 500px) {
+    .search-bar{
+        font-size: 1.5rem;
+    }
+    .nutri-score-letters{
+        font-size: 3.5rem;
+    }
+    .nutri-score-descr{
+        font-size: 1.5rem;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .search-icon{
+      background-image: url("../StemaPics/search-icon-mini.png");
+      background-size: auto;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }

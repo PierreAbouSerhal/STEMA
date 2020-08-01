@@ -1,0 +1,170 @@
+body {
+    font-family: "Lato", sans-serif;
+  }
+  
+  .sidenav {
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 65px;
+    bottom: 20px;
+    left: calc(50% - 50vw);
+    background: linear-gradient(
+      90deg,
+      rgba(19, 140, 74, 0.965),
+      rgba(252, 240, 152, 0.965));
+    overflow-x: hidden;
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+    transition: 0.4s;
+  }
+  
+  .sidenav a {
+    padding: 8px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: bold;
+    color: black;
+    display: block;
+    transition: 0.3s;
+    white-space: nowrap;
+  }
+  
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .menu-image-container{
+    padding-left: 20%;
+    margin: 10px 0 10px 0;
+  }
+
+  .bottom-border{
+    display: flex;
+    align-items: center;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: black;
+    margin: 0px 10px 0px 10px;
+    padding: 5px 0 5px 0;
+  }
+
+  .burger-icons{
+    width: 40px;
+    height: 35px;
+    min-width: 40px;
+    padding-left: 5px;
+  }
+
+  .main-container{
+    position: relative;
+    padding: 0;
+    max-width: 500px;
+  }
+
+  .logo-container{
+    display: flex;
+    padding-left: 10px;
+    background: linear-gradient(
+      90deg, 
+      rgba(3,129,66,1),
+      rgba(133,187,47,1) ,
+      rgba(255,204,3,1) ,
+      rgba(238,129,0,1) ,
+      rgba(230,62,17,1) 
+      ); 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+  }
+  
+  .nutritioniste-container{
+    display: flex;
+    height: 100%;
+    cursor: pointer;
+    padding-left: 5px;
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-left-color: black;
+  }
+
+  .book-now-text{
+    transform: rotate(-40deg); 
+    -moz-transform: rotate(-40deg); 
+    text-align: center;
+    line-height: 0.8rem;
+    margin-top: 15px;
+    margin-left: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  #logoName{
+    width: 100px;
+  }
+
+  .a{
+    color: rgb(3,129,66);
+  }
+  
+  .b{
+    color: rgb(133,187,47);
+  }
+
+  .c{
+    color: rgb(255,204,3);
+  }
+
+  .d{
+    color: rgb(238,129,0);
+  }
+
+  .e{
+    color: rgb(230,62,17) ;
+  }
+
+  .border-a{
+    border-color: rgb(3,129,66);
+  }
+  .border-b{
+   border-color: rgb(133,187,47); 
+  }
+  .border-c{
+    border-color: rgb(255,204,3);
+  }
+  .border-d{
+    border-color: rgb(238,129,0);
+  }
+  .border-e{
+    border-color: rgb(230,62,17);
+  }
+
+  @media screen and (max-height: 500px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  @media screen and (min-width: 500px) {
+    .sidenav {left: calc(50% - 250px);  }
+
+    #logoName{
+      width: 150px;
+    }
+  }
+
+  @media screen and (max-width: 300px) {
+    .book-now-text{
+      display: none;
+    }
+  }
+  

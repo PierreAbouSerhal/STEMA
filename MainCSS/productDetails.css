@@ -1,0 +1,119 @@
+.prod-name-container{
+    display: flex;
+    height: 90px;
+    font-size: 2rem;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    border-top: 7px solid;
+    border-bottom: 7px solid;
+}
+
+.border-a{
+    border-color: rgb(3,129,66);
+}
+
+.border-b{
+    border-color: rgb(133,187,47); 
+}
+
+.border-c{
+    border-color: rgb(255,204,3);
+}
+
+.border-d{
+    border-color: rgb(238,129,0);
+}
+
+.border-e{
+    border-color: rgb(230,62,17);
+}
+
+.background-a{
+    background-color: rgb(111, 183, 146);
+}
+
+.background-b{
+    background-color: rgb(180, 230, 100);
+}
+
+.background-c{
+    background-color: rgb(252, 219, 88);
+}
+
+.background-d{
+    background-color: rgb(238, 165, 81);
+}
+
+.background-e{
+    background-color: rgb(247, 121, 86);
+}
+
+.title{
+    color: rgb(224, 69, 5);
+    font-size: 1.7rem;
+    text-align: center;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+}
+
+.letter{
+    font-size: 1.5rem;
+}
+
+.info{
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.nutri-ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nutri-ul li{
+    background: url("../StemaPics/ul-bullet.svg") no-repeat top left;
+    background-size: 22px;
+    padding: 0 0 10px 10%;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.alrg-ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.alrg-ul li{
+    font-size: 1.2rem;
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.facts-container{
+    margin: 0 12% 0 12%;
+
+}
+
+.adtv-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.adtv{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 30px
+}
+
+.info{
+    font-weight: bold;
+    font-size: 1.2rem;
+}

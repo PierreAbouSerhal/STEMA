@@ -1,0 +1,11 @@
+.info-title{
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.info{
+    font-size: 0.9rem;
+    padding: 10px;
+    text-align: justify;
+}

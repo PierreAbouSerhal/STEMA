@@ -1,0 +1,82 @@
+.container{
+    max-width: 500px;
+    padding: 0;
+}
+
+.login-header{
+    text-align: center;
+    padding-bottom: 10px;
+    background: linear-gradient(
+      90deg, 
+      rgba(3,129,66,1),
+      rgba(133,187,47,1) ,
+      rgba(255,204,3,1) ,
+      rgba(238,129,0,1) ,
+      rgba(230,62,17,1) 
+      ); 
+}
+
+.login-message{
+    white-space: nowrap;
+    font-size: 2rem;
+}
+
+.login-form{
+    padding: 30px;
+}
+
+.forgot-password{
+    font-size: 0.7rem;
+    text-align: end;
+    margin-bottom: 50px;
+}
+
+.btn{
+    width: 100%;
+    margin-bottom: 25px;
+    border-style: none;
+    background: linear-gradient(
+      90deg, 
+      rgba(3,129,66,1),
+      rgba(133,187,47,1) ,
+      rgba(255,204,3,1) ,
+      rgba(238,129,0,1) ,
+      rgba(230,62,17,1) 
+      ); 
+}
+
+.sign-up{
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.invisible-separator{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.msg-container{
+    text-align: center;
+    width: 100%;
+    font-size: 0.7rem;
+}
+
+.danger{
+    background-color:rgba(230,62,17,0.5);
+}
+
+.success{
+    background-color:rgba(93, 227, 73, 0.5);
+}
+
+.error-message-container{
+    height: 5px;  
+    font-size: 0.8rem;
+}
+.form-text{
+    color: red;
+}
+

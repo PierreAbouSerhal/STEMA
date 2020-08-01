@@ -1,0 +1,122 @@
+.CharacterContainer {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    justify-content: center;
+    height: 100%;
+    color: black;
+    cursor: pointer;
+    border-bottom-style: solid;
+    border-bottom-width: thick;
+    border-image: 
+    linear-gradient(
+      90deg, 
+      rgba(3,129,66,1),
+      rgba(133,187,47,1) ,
+      rgba(255,204,3,1) ,
+      rgba(238,129,0,1) ,
+      rgba(230,62,17,1) 
+      );
+    border-image-slice: 1;
+    margin: 10px 0px 10px 0px;
+}
+
+.CharacterElement {
+    margin: 5px;
+    font-weight: bold;
+}
+
+.CharacterElement:hover{
+    transition: 0.1s;
+    color: rgb(230,62,17);
+}
+
+.info{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: gray;
+    margin: 30px 10px 30px 10px;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.ingredient{
+    margin: 10px;
+    height: 100%;
+    margin-bottom: 50px;
+}
+
+.ingredient-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: black;
+}
+
+.ingredient-img{
+    width: 30%;
+    min-width: 100px;
+}
+
+.ingredient-name{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 15%;
+}
+
+.fact{
+    display: flex;
+    justify-content: space-between;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: black;
+}
+
+.alrg-facts{
+    display: flex;
+    flex-direction: row;
+}
+
+.symptoms-container{
+    width: 50%;
+    border-right: solid black 1px;
+}
+
+.risks-container{
+    width: 50%;
+}
+
+.sml-title{
+    height: 30%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.details{
+    text-align: center;
+}
+
+.adtv-prop{
+    display: flex;
+    font-size: 0.9rem;
+    justify-content: space-between;
+    border-bottom: solid black 1px;
+}
+
+.prop{
+    font-weight: bold;
+}
+
+@media screen and (min-width: 500px) {
+    .CharacterElement{
+        margin: 0;
+        margin-right: 2%;
+    }
+  }
