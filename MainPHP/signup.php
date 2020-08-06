@@ -1,7 +1,6 @@
 <?php
     require_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/HtConfig/mailConfig.php");
     require_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/PhpUtils/mailSetup.php");
-    require_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/HtConfig/mailConfig.php");
 
     $usrName = $usrPhone = $usrEmail = $usrPass1 = $usrPass2 = $msg = $status = "";
 
@@ -29,7 +28,7 @@
             if(is_numeric($usrPhone) && strpos($usrEmail, '@') !== false && strlen($usrPass1) > 4 && $usrPass1 == $usrPass2)
             {
                 //UNIQUE ACCOUNT VERIFICATION
-                $sqlVerif = "SELECT COUNT(*) AS rowNbr, activated FROM users WHERE phone = ".$usrPhone." OR email = '".$usrEmail."' ;";
+                $sqlVerif = "SELECT COUNT(*) AS rowNbr, activated, phone FROM users WHERE phone = ".$usrPhone." OR email = '".$usrEmail."' ;";
 
                 $queryVerif = mysqli_query($dbConx, $sqlVerif);
                 $res = mysqli_fetch_assoc($queryVerif);
@@ -84,18 +83,32 @@
                 }
                 else if($res["rowNbr"] == 1 && $res["activated"] == 0)//ACCOUNT FOUND BUT NOT ACTIVATED
                 {
-                    //SEND THE MAIL
-                    $jmomailer = new JMOMailer(true, $smtp);
-                        
-                    if($jmomailer->mail($to, $subject, $html, $from))
+                    $sqlUpdate = "UPDATE users 
+                                  SET activationCode = '".$activCode."' 
+                                  WHERE phone = ".$res["phone"].";";
+                    
+                    $queryUpdate = mysqli_query($dbConx, $sqlUpdate);
+
+                    if($queryUpdate)
                     {
-                        $msg = "This account is already created but not activated, please verify it by clicking the activation link that has been sent to your email.";
-                        $status = "success";
+                        //SEND THE MAIL
+                        $jmomailer = new JMOMailer(true, $smtp);
+                            
+                        if($jmomailer->mail($to, $subject, $html, $from))
+                        {
+                            $msg = "This account is already created but not activated, please verify it by clicking the activation link that has been sent to your email.";
+                            $status = "success";
+                        }
+                        else
+                        {
+                            $msg = "An error has occured while sending the mail, please try again";
+                            $status ="danger";
+                        }
                     }
                     else
                     {
-                        $msg = "An error has occured while sending the mail, please try again";
-                        $status ="danger";
+                        $msq = "Error in sql Update";
+                        $status = "danger";
                     }
                 }
                 else // ACCOUNTS WITH SAME PHONE NUMBER OR EMAIL ARE FOUND

@@ -10,7 +10,6 @@
 
     require_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/HtConfig/mailConfig.php");
     require_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/PhpUtils/mailSetup.php");
-    require_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/HtConfig/mailConfig.php");
 
     $msg = $status = $usrEmail = "";
 

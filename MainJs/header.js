@@ -28,5 +28,5 @@ function hideMenuItems(isLoggedIn)
 
 function goToSignUp()
 {
-  window.location.replace("https://localhost/STEMA/MainPhp/index.php");
+  window.location.replace("https://localhost/STEMA/MainPhp/signup.php");
 }
