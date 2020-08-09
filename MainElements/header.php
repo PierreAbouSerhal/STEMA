@@ -61,7 +61,7 @@
           echo '
           <div class="bottom-border logged-in">
             <img class="burger-icons" src="../StemaPics/burgerMenuIcons/adjust.svg">
-            <a href="../MainPHP/adminPage.php">Update Stema</a>
+            <a href="../AdminPages/adminPage.php">Update Stema</a>
           </div>
           ';
         }
