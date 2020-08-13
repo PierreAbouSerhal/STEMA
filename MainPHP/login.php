@@ -41,7 +41,7 @@
         if(!empty($phone) && !empty($pass) && is_numeric($phone))
         {
             
-            $sql = "SELECT *, COUNT(*) AS rowNbr FROM users WHERE phone = ".$phone." AND password = '".$pass."';";
+            $sql = "SELECT *, COUNT(*) AS rowNbr, role FROM users WHERE phone = ".$phone." AND password = '".$pass."';";
             $query = mysqli_query($dbConx, $sql);
             $res = mysqli_fetch_assoc($query);
 

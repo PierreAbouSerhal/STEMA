@@ -15,7 +15,12 @@
 
         if($res["rowNbr"] == 1)
         {
-            $sqlUpdate = "UPDATE users SET activated = 1 WHERE activationCode = '".$activCode."' LIMIT 1;";
+            $sqlUpdate = "UPDATE users
+                          SET activated = 1,
+                              creationDate = CURDATE()
+                          WHERE activationCode = '".$activCode."' 
+                          LIMIT 1;";
+                          
             $queryUpdate = mysqli_query($dbConx, $sqlUpdate);
             if($queryUpdate)
             {

@@ -61,7 +61,7 @@ else if(isset($_COOKIE["userToken"]))
         $userId = $user["userId"];
 
         //REINITIATE SESSION VARIABLES
-        $sqlCheck = "SELECT *, COUNT(*) AS rowNbr FROM users WHERE id = ".$userId.";";
+        $sqlCheck = "SELECT *, COUNT(*) AS rowNbr, role FROM users WHERE id = ".$userId.";";
         $queryCheck = mysqli_query($dbConx, $sqlCheck);
         $resCheck = mysqli_fetch_assoc($queryCheck);
 

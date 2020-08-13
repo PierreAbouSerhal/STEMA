@@ -1,0 +1,27 @@
+.welcome-msg{
+    text-align: center;
+    margin-top: 10px;
+  }
+
+.info-main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-container{
+    width: 80%;
+    height: 250px;
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 10px;
+    background-color: aquamarine;
+}
+
+.info-nbr{
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.info{
+    text-align: center;
+}
