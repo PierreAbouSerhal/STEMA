@@ -4,10 +4,10 @@
         <img src="../StemaPics/burgerMenuIcons/settings.png" style="width: 150px; height: 150px">
       </div>
       <div class="bottom-border">
-        <a href="../MainPHP/generalInfo.php">General Info</a>
+        <a href="../AdminPages/generalInfo.php">General Info</a>
       </div>
       <div class="bottom-border">
-        <a href="#">Manage Ingredients</a>
+        <a href="../AdminPages/mngIngredients.php">Manage Ingredients</a>
       </div>
       <div class="bottom-border">
         <a href="#">Manage Products</a>

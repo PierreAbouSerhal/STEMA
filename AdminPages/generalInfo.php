@@ -1,13 +1,11 @@
 <?php
     include_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/PhpUtils/checkLoginStatus.php");
 
-    $msg = $status = "";
-
-    if(!$user["userOk"] && !$isAdmin)
+    if(!$user["userOk"] || !$isAdmin)
     {
         logout();
         // PAGE NO LONGER AVAILABLE FOR LOGGED OUT USER
-        header("Location = index.php");
+        header("Location: ../MainPHP/index.php");
         exit();
     }
 
@@ -21,7 +19,10 @@
 
     $queryAll = mysqli_query($dbConx, $sqlAll);
 
-    $sqlFav = "SELECT fav.variantId, vari.name, COUNT(fav.variantId) AS rowNbr
+    $sqlFav = "SELECT fav.variantId, 
+                      vari.name,
+                      vari.image1, 
+                      COUNT(fav.variantId) AS rowNbr
                FROM favorites AS fav
                JOIN variants AS vari ON vari.id = fav.variantId
                GROUP BY fav.variantId
@@ -30,7 +31,9 @@
 
     $queryFav = mysqli_query($dbConx, $sqlFav);
 
-    $sqlView = "SELECT hist.variantId, vari.name, COUNT(hist.variantId) AS rowNbr
+    $sqlView = "SELECT hist.variantId,
+                       vari.name, 
+                       COUNT(hist.variantId) AS rowNbr
                 FROM history AS hist
                 JOIN variants AS vari ON vari.id = hist.variantId
                 GROUP BY hist.variantId
@@ -71,19 +74,28 @@
         ?>
         <h3 class="welcome-msg">Welcome <?php echo $_SESSION["userName"];?></h3>
         <div class="info-main-container">
-            <div class="info-container">
+            <div class="info-container" style="background-color: rgb(133,187,47);">
                 <p class="info-nbr"><?php echo $resToday["rowNbr"]?></p>
                 <p class="info">New Registered Users Today</p>
+                <img class="info-img" src="../StemaPics/newUser.png">
             </div>
-            <div class="info-container">
+            <div class="info-container" style="background-color: rgb(255,204,3);">
                 <p class="info-nbr"><?php echo $resAll["rowNbr"]?></p>
                 <p class="info">Registered Users In Total</p>
+                <img class="info-img" src="../StemaPics/multy-user.png">
             </div>
-            <div class="info-container">
-                <p>Most Favorite Product: <?php echo $resFav["name"]?></p>
+            <div class="info-container" style="background-color: rgb(238,129,0);">
+                <p class="info-txt">Most Favorite Product:</p>
+                <p class="info"><?php echo $resFav["name"]?></p>
+                <?php
+                    $picPath = (empty($resFav["image1"])) ? "../StemaPics/stars.png" : $resFav["image1"];
+                ?>
+                <img class="info-img" src="../StemaPics/stars.png">
             </div>
-            <div class="info-container">
-                <p>Most Viewed Product: <?php echo $resView["name"]?></p>
+            <div class="info-container" style="background-color: rgb(230,62,17);">
+                <p class="info-txt">Most Viewed Product:</p>
+                <p class="info"><?php echo $resView["name"]?></p>
+                <img class="info-img" src="../StemaPics/preview.png">
             </div>
         </div>
     </div>

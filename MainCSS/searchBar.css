@@ -1,0 +1,55 @@
+.form{
+    display: flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    margin:20px 10px 20px 10px
+}
+
+.search-icon{
+    width: 24px;
+    min-width: 24px;
+    background-image: url("../StemaPics/search-icon.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-bar-wraper{
+    display: flex;
+}
+
+.search-bar{
+    margin-right: 5%;
+    border-style: none;
+    border-bottom: 1px solid black;
+}
+
+.button-add{
+    display: block;
+    width: 90px;
+    height: 42px;
+    background: linear-gradient(
+        90deg, 
+        rgba(3,129,66,1),
+        rgba(133,187,47,1) ,
+        rgba(255,204,3,1) ,
+        rgba(238,129,0,1) ,
+        rgba(230,62,17,1) 
+        ); ;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none !important;
+    line-height: 25px;
+}
+
+.button-add:hover 
+{
+     color: black; 
+     text-decoration:none; 
+     cursor:pointer;  
+}

@@ -240,3 +240,8 @@ function validateMyProfile()
     return valid;
 
 }
+
+function validateIngrs()
+{
+    
+}

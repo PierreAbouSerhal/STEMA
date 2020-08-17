@@ -5,7 +5,7 @@
     {//AUTOMATIC LOGOUT
         logout();
         // PAGE NO LONGER AVAILABLE FOR LOGGED OUT USER
-        header("Location = index.php");
+        header("Location: index.php");
         exit();
     }
 

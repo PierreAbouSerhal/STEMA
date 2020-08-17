@@ -24,7 +24,7 @@
                     )
                     JOIN productbrands AS brands ON brands.id = prod.brandId
                 WHERE
-                    prod.name = '".$userInput."' OR vari.name = '".$userInput."' OR vari.barcode = '".$userInput."'  
+                    prod.name LIKE '".$userInput."%' OR vari.name LIKE '".$userInput."%' OR vari.barcode = '".$userInput."'  
                 ";
 
         $query = mysqli_query($dbConx, $sql);

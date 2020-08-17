@@ -47,7 +47,7 @@ if(isset($_SESSION["userToken"]) && isset($_SESSION["loggedin"]))
         $userEmail = $_SESSION["userEmail"];
         $userName  = $_SESSION["userName"];
         $isAdmin   = $_SESSION["isAdmin"];
-        $user = evalLoggedUser($dbConx, $hashedToken, $user);
+        $user      = evalLoggedUser($dbConx, $hashedToken, $user);
     }
 }
 else if(isset($_COOKIE["userToken"]))
