@@ -243,5 +243,59 @@ function validateMyProfile()
 
 function validateIngrs()
 {
-    
+    let valid = true;
+
+    let IngrName   = document.getElementById("IngrName");
+    let errorName  = document.getElementById("errorName");
+    let nutriFacts = document.getElementsByClassName("nutriFacts");
+    let errorId    = "";
+
+    let fuData     = document.getElementById("file-input");
+    let errorImage = document.getElementById("errorImage");
+
+    let fileUploadPath = fuData.value;
+
+    if (fileUploadPath != '')
+    {
+        var extension = fileUploadPath.substring(fileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+
+        if (extension == "jpg" || extension == "png" || extension == "jpeg" || extension == "gif") 
+        {
+            if (fuData.files && fuData.files[0]) 
+            {
+                var size = fuData.files[0].size;
+                console.log(size);
+                if(size > 500000)
+                {
+                    valid = false;
+                    errorImage.innerHTML = "Image size is bigger than 500KB";
+                }
+            }
+        }
+        else 
+        {
+            valid = false;
+            errorImage.innerHTML = "Photo only allows file types of JPG, PNG, JPEG, GIF";
+        }
+    }
+
+    if(IngrName.value == "")
+    {
+        IngrName.style.borderColor = "red";
+        errorName.innerHTML = "Ingredient Name is empty";
+        valid = false;
+    }
+
+    for(let i = 0; i < nutriFacts.length; i++)
+    {
+        if(isNaN(nutriFacts[i].value))
+        {
+            valid = false;
+            nutriFacts[i].style.borderColor = "red";
+            errorId = "errorNutriFact" + i;
+            document.getElementById(errorId).innerHTML = "Fact is not numeric";
+        }
+    }
+
+    return valid;
 }

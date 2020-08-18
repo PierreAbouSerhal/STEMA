@@ -70,7 +70,7 @@
                     $uploadOk = 0;
                 }
 
-                //DELETE IF EXISTS
+                //DELETE IMAGE IF EXISTS
                 if(file_exists($target_file))
                 { 
                     unlink($target_file);
@@ -84,7 +84,7 @@
             }
 
             //SQL VARIABLES
-            $sqlNutri = $sqlAlrg = $sqlAdtv = "";
+            $sqlIngr = $sqlNutri = $sqlAlrg = $sqlAdtv = "";
 
             if($resIngrCheck["rowNbr"] == 1)
             {
@@ -98,14 +98,21 @@
                     $sqlIngr = 'UPDATE ingredients SET name = "'.$ingrName.'", image = "'.$ingrImg.'"
                                     WHERE ingredients.id = '.$ingId;
                 }
-                
 
                 $queryIngr = mysqli_query($dbConx, $sqlIngr);
             }
             else
             {
-                $sqlIngr = 'INSERT INTO ingredients (name)
-                            VALUES ("'.$ingrName.'")';
+                if(empty($ingrImg))
+                {
+                    $sqlIngr = 'INSERT INTO ingredients (name)
+                                    VALUES ("'.$ingrName.'")';
+                }
+                else
+                {
+                    $sqlIngr = 'INSERT INTO ingredients (name, image)
+                                    VALUES ("'.$ingrName.'", "'.$ingrImg.'")';
+                }
 
                 $queryIngr = mysqli_query($dbConx, $sqlIngr);
 
@@ -346,10 +353,10 @@
             ?>
             <h4 class="section">General Info.</h4>
             
-            <form class="form" action="<?php $action = $_SERVER["PHP_SELF"]."?id=".$ingId; echo $action;?>" method="POST" enctype="multipart/form-data">
+            <form class="form" action="<?php $action = $_SERVER["PHP_SELF"]."?id=".$ingId; echo $action;?>" method="POST" enctype="multipart/form-data" onsubmit=" return validateIngrs();">
                 <div class="input-row">
                     <span class="input-label">Name:</span>
-                    <input class="form-control form-control-sm input" type="text" value="<?php echo $arrGeneral["Name"];?>" name="Name">
+                    <input id="IngrName" class="form-control form-control-sm input" type="text" value="<?php echo $arrGeneral["Name"];?>" name="Name">
                 </div>
                 <div class="error-message-container">
                     <span id="errorName" class="error-message"></span>
@@ -372,13 +379,19 @@
                 </div>
                 <h4 class="section">Nutritional Info.</h4>
             <?php
+                $nutriNbr = 0; //NUTRI FACT INPUT NUMBER
+
                 foreach($arrNutri as $key=>$value)
                 {
                     echo '<div class="input-row">
                             <span class="input-label">'.$key.':</span>
-                            <input class="form-control form-control-sm input" type="text" value="'.$value.'" name="'.str_replace(' ', '', $key).'">
+                            <input class="form-control form-control-sm input nutriFacts" type="text" value="'.$value.'" name="'.str_replace(' ', '', $key).'">
+                        </div>
+                        <div class="error-message-container">
+                            <span id="errorNutriFact'.$nutriNbr.'" class="error-message"></span>
                         </div>
                         ';
+                        $nutriNbr += 1;
                 }
             ?>
                 <h4 class="section">Alergy Info.</h4>
@@ -388,6 +401,9 @@
                     echo '<div class="input-row">
                             <span class="input-label">'.$key.':</span>
                             <input class="form-control form-control-sm input" type="text" value="'.$value.'" name="'.str_replace(' ', '', $key).'">
+                        </div>
+                        <div class="error-message-container">
+                            
                         </div>
                         ';
                 }
@@ -399,6 +415,9 @@
                     echo '<div class="input-row">
                             <span class="input-label">'.$key.':</span>
                             <input class="form-control form-control-sm input" type="text" value="'.$value.'" name="'.str_replace(' ', '', $key).'">
+                        </div>
+                        <div class="error-message-container">
+                            
                         </div>
                         ';
                 }

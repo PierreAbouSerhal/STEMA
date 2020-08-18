@@ -17,7 +17,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .input-label{
@@ -33,11 +32,13 @@
 .error-message{
     font-size: 0.75rem;
     margin-left: 40%;
+    color: red;
 }
 
 .error-message-container{
-    margin-bottom: 10px;
     height: 25px;
+    display: flex;
+    padding-top: 2px;
 }
 
 .image-upload{

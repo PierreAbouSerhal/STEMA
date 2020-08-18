@@ -10,7 +10,7 @@
         <a href="../AdminPages/mngIngredients.php">Manage Ingredients</a>
       </div>
       <div class="bottom-border">
-        <a href="#">Manage Products</a>
+        <a href="../AdminPages/mngProducts.php">Manage Products</a>
       </div>
       <div class="bottom-border">
         <a href="#">Manage Variants</a>

@@ -10,7 +10,7 @@
     }
 
     $phpSelf = $_SERVER["PHP_SELF"];
-    $placeHolder = "Search Ingredients";
+    $placeHolder = "Search Products";
 
     $fop = "true";
     $userInput = "";
@@ -18,11 +18,11 @@
     if(isset($_POST["userInput"]) && !empty($_POST["userInput"]))
     {
         $userInput = mysqli_escape_string($dbConx, $_POST["userInput"]);
-        $fop = "ingredients.name LIKE '".$userInput."%'";
+        $fop = "products.name LIKE '".$userInput."%'";
     }
 
     $sqlSrch = "SELECT * 
-                FROM ingredients
+                FROM products
                 WHERE ".$fop.
                 " ORDER BY Name";
 
@@ -46,7 +46,7 @@
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <script src="../MainJs/header.js"></script>
     
-    <title>Manage Ingredients</title>
+    <title>Manage Products</title>
 </head>
 <body>
     <div class="container main-container">
@@ -60,7 +60,7 @@
                 <thead>
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Ingredient Name</th>
+                    <th scope="col">Product Name</th>
                     <th scope="col" style="text-align: center;">Options</th>
                     </tr>
                 </thead>
@@ -69,19 +69,19 @@
             $lineId = 0;
             while($resSrch = mysqli_fetch_assoc($querySrch))
             {
-                $ingrId    = $resSrch["id"];
-                $ingrName  = $resSrch["name"];
+                $prodId    = $resSrch["id"];
+                $prodName  = $resSrch["name"];
                 $lineId += 1;
 
                 echo '<tr>
                         <th scope="row">'.$lineId.'</th>
-                        <td>'.$ingrName.'</td>
+                        <td>'.$prodName.'</td>
                         <td class="option-col">
-                            <a href="ingrs.php?isNew=0&id='.$ingrId.'">
-                                <i class="far fa-edit" title="Edit Ingredient"></i>
+                            <a href="prods.php?isNew=0&id='.$prodId.'">
+                                <i class="far fa-edit" title="Edit Product"></i>
                             </a>
                             <a href="">
-                                <i id="ingr_'.$ingrId.'" class="far fa-trash-alt delete" title="Delete Ingredient"></i>
+                                <i id="prod_'.$prodId.'" class="far fa-trash-alt delete" title="Delete Product"></i>
                             </a>
                         </td>
                       </tr>';
@@ -93,26 +93,26 @@
     </div>
 
     <script>
-        //REMOVE INGREDIENT FROM DB AND UPDATE HTML 
+        //REMOVE PRODUCT FROM DB AND UPDATE HTML 
         $(document).ready(function()
         {
             //DELETE 
             $('.delete').click(function()
             {
-                let idx     = "ING";
+                let idx     = "PRD";
                 let el      = this;
                 let id      = this.id;
                 let splitid = id.split("_");
-
+                console.log("delete is pressed");
                 //IDS
-                let ingrId = splitid[1];
+                let prodId = splitid[1];
                 
                 //AJAX REQUEST
                 $.ajax(
                 {
                     url: 'remove.php',
                     type: 'POST',
-                    data: { idx: idx ,id: ingrId },
+                    data: { idx: idx ,id: prodId },
                     success: function(response)
                     {
                         if(response == 1)
@@ -133,6 +133,5 @@
             });
         });
     </script>
-
 </body>
 </html>
