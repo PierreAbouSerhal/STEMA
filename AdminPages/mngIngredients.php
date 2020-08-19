@@ -52,6 +52,7 @@
     <div class="container main-container">
         
         <?php 
+            $pageIdx = "ING";
             include_once($_SERVER["DOCUMENT_ROOT"]."/Stema/MainElements/adminHeader.php");
             include_once($_SERVER["DOCUMENT_ROOT"]."/Stema/MainElements/searchBar.php");
         ?>
@@ -80,7 +81,7 @@
                             <a href="ingrs.php?isNew=0&id='.$ingrId.'">
                                 <i class="far fa-edit" title="Edit Ingredient"></i>
                             </a>
-                            <a href="">
+                            <a class="detete-icon">
                                 <i id="ingr_'.$ingrId.'" class="far fa-trash-alt delete" title="Delete Ingredient"></i>
                             </a>
                         </td>
@@ -117,7 +118,7 @@
                     {
                         if(response == 1)
                         {
-                            //REMOVE VARIANT DIV FROM HTML
+                            //REMOVE INGREDIENT TR FROM HTML
                             $(el).closest('tr').css('background','tomato');
                             $(el).closest('tr').fadeOut(800,function()
                             {

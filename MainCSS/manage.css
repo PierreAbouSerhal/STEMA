@@ -97,3 +97,13 @@
     line-height: 25px;
     margin-top: 20px;
 }
+
+.detete-icon{
+    color: red !important;
+    cursor: pointer;
+}
+
+.delete-icon:hover{
+    color: rgb(200, 0, 0) !important;
+    cursor: pointer;
+}

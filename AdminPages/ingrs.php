@@ -41,7 +41,7 @@
         $riskAdtv = mysqli_real_escape_string($dbConx, $_POST["AdditiveRisk"]);
         $formula  = mysqli_real_escape_string($dbConx, $_POST["Formula"]);
 
-        if(!empty($_POST["Name"]) && (is_numeric($cal)    || empty($cal))    && (is_numeric($fat)   || empty($fat))   && (is_numeric($sFat)    || empty($sFat)) && 
+        if(!empty($ingrName) && (is_numeric($cal)    || empty($cal))    && (is_numeric($fat)   || empty($fat))   && (is_numeric($sFat)    || empty($sFat)) && 
                                      (is_numeric($carbs)  || empty($carbs))  && (is_numeric($sugar) || empty($sugar)) && (is_numeric($protein) || empty($protein)) && 
                                      (is_numeric($sodium) || empty($sodium)) && (is_numeric($fiber) || empty($fiber)) && (is_numeric($alcohol) || empty($alcohol))
         )

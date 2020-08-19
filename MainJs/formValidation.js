@@ -299,3 +299,75 @@ function validateIngrs()
 
     return valid;
 }
+
+function validateProds()
+{
+    let valid = true;
+
+    //0 -->NAME; 1-->SCORE; 2-->INFO
+    let inputs = document.getElementsByClassName("product");
+
+    let errorName  = document.getElementById("errorProduct0");
+    let errorScore = document.getElementById("errorProduct1");
+    let errorBrand = document.getElementById("errorBrand");
+
+    let brand      = document.getElementById("brand");
+
+    let score = ["A", "B", "C", "D", "E"];
+
+    if(inputs[0].value == "")
+    {
+        inputs[0].style.borderColor = "red";        
+        errorName.innerHTML = "Product name is empty";
+    }
+    else
+    {
+        inputs[0].style.borderColor = "green";
+        errorName.innerHTML = "";
+    }
+
+    if(inputs[1].value == "")
+    {
+        inputs[1].style.borderColor = "red";
+        errorScore.innerHTML = "Nutri Score is empty"
+    }
+    else if(score.indexOf(inputs[1].value.toUpperCase()) === -1)
+    {
+        inputs[1].style.borderColor = "red";
+        errorScore.innerHTML = "Choose between 'A','B','C','D','E'";
+    }
+    else
+    {
+        inputs[1].style.borderColor = "green";
+        errorScore.innerHTML = "";
+    }
+
+    if(brand.value == "")
+    {
+        brand.style.borderColor = "red";
+        errorBrand.innerHTML = "Product brand is empty";
+    }
+    else
+    {
+        brand.style.borderColor = "green";
+        errorBrand.innerHTML = "";
+    }
+
+    inputs[2].style.borderColor = "green"; //INFO CAN BE EMPTY
+
+    for(let i = 0; i < inputs.length; i++)
+    {
+        if(inputs[i].style.borderColor != "green")
+        {
+            valid = false;
+            break;
+        }
+    }
+
+    if(brand.style.borderColor != "green")
+    {
+        valid = false;
+    }
+
+    return valid;
+}

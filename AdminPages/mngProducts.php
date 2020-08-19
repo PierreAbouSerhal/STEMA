@@ -52,6 +52,7 @@
     <div class="container main-container">
         
         <?php 
+            $pageIdx = "PRD";
             include_once($_SERVER["DOCUMENT_ROOT"]."/Stema/MainElements/adminHeader.php");
             include_once($_SERVER["DOCUMENT_ROOT"]."/Stema/MainElements/searchBar.php");
         ?>
@@ -80,7 +81,7 @@
                             <a href="prods.php?isNew=0&id='.$prodId.'">
                                 <i class="far fa-edit" title="Edit Product"></i>
                             </a>
-                            <a href="">
+                            <a class= "detete-icon">
                                 <i id="prod_'.$prodId.'" class="far fa-trash-alt delete" title="Delete Product"></i>
                             </a>
                         </td>
@@ -103,7 +104,7 @@
                 let el      = this;
                 let id      = this.id;
                 let splitid = id.split("_");
-                console.log("delete is pressed");
+
                 //IDS
                 let prodId = splitid[1];
                 
@@ -117,7 +118,7 @@
                     {
                         if(response == 1)
                         {
-                            //REMOVE VARIANT DIV FROM HTML
+                            //REMOVE PRODUCT TR FROM HTML
                             $(el).closest('tr').css('background','tomato');
                             $(el).closest('tr').fadeOut(800,function()
                             {
