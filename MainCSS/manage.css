@@ -107,3 +107,22 @@
     color: rgb(200, 0, 0) !important;
     cursor: pointer;
 }
+
+.scroll-container{
+    height:400px;
+    width:100%;
+    border:1px solid #ccc;
+    overflow:auto;
+}
+
+.quantity-input{
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    margin: 0;
+}
+
+.empty-message{
+    text-align: center;
+    color: red;
+    height: 25px;
+}

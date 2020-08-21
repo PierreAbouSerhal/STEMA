@@ -8,7 +8,7 @@
         header("Location: ../MainPHP/index.php");
         exit();
     }
-
+    $pageIdx = "PRD";
     if(isset($_GET["id"]) && !empty($_GET["id"]))//EDIT PRODUCT
     {
         $prodId = mysqli_real_escape_string($dbConx, $_GET["id"]);
@@ -29,10 +29,26 @@
         $brandId  = mysqli_real_escape_string($dbConx, $_POST["brand"]);
         $score    = strtoupper(mysqli_real_escape_string($dbConx, $_POST["NutriScore"]));
         $info     = mysqli_real_escape_string($dbConx, $_POST["Info"]);
+        $save     = true;
 
-        $info = (empty($info)) ? 'NULL' : '"'.$info.'"';
+        $info     = (empty($info)) ? 'NULL' : '"'.$info.'"';
+        $ingrQty  = array();
 
-        if(!empty($prodName) && !empty($brandId) && in_array($score, $nutriScore))
+        if(!empty($_POST["ingr_list"]))
+        {
+            foreach($_POST["ingr_list"] as $ingrId)
+            {
+                if(empty($_POST["qty_".$ingrId]))
+                {
+                    $save = false;
+                    break;
+                }
+                $ingrId = mysqli_real_escape_string($dbConx, $ingrId);
+                $ingrQty[$ingrId] = mysqli_escape_string($dbConx, $_POST["qty_".$ingrId]);
+            }
+        }
+        
+        if(!empty($prodName) && !empty($brandId) && in_array($score, $nutriScore) && !empty($ingrQty) && $save)
         {
             $sqlProdCheck    = "SELECT COUNT(*) AS rowNbr FROM Products WHERE id = ".$prodId;
             
@@ -48,7 +64,7 @@
             if($resProdCheck["rowNbr"] == 1)
             {
                 $sqlProd = 'UPDATE products SET name = "'.$prodName.'", brandId = "'.$brandId.'", nutriscore = "'.$score.'", info = '.$info.'
-                                WHERE ingredients.id = '.$ingId;
+                                WHERE products.id = '.$prodId;
 
                 $queryProd = mysqli_query($dbConx, $sqlProd);
             }
@@ -63,12 +79,31 @@
                 {
                     //GET THE NEW CREATED ID
                     $prodId = mysqli_insert_id($dbConx);
+                    $resProdCheck["rowNbr"] = 1;
                 } 
                 else
                 {
                     //FAILED TO INSERT INTO THE DATABASE
-                    header("Location: mngProducts.php");
+                    header("Location: manage.php?idx=".$pageIdx);
                     exit();
+                }
+            }
+
+            if($resProdCheck["rowNbr"] = 1)
+            {
+                //DELETE IF ALREADY EXISTS
+                $sqlDelete   = 'DELETE FROM productingredients WHERE productId = '.$prodId;
+                $queryDelete = mysqli_query($dbConx, $sqlDelete);
+
+                if($queryDelete)
+                {
+                    foreach($ingrQty as $ingr=>$qty)
+                    {
+                        $sqlProdIngr = 'INSERT INTO productingredients (productId, ingredientId, quantity)
+                                            VALUES('.$prodId.', '.$ingr.', '.$qty.')';
+                        
+                        $queryProdIngr = mysqli_query($dbConx, $sqlProdIngr);
+                    }
                 }
             }
         }
@@ -130,11 +165,15 @@
 
     mysqli_free_result($queryProd);
 
-    $sqlIngr = "SELECT * FROM ingredients ORDER BY Name";
+    $sqlIngr = "SELECT ingr.name, prodIngr.productId, prodIngr.quantity, ingr.id AS ingrId
+                FROM ingredients AS ingr
+                LEFT JOIN (
+                        SELECT * FROM productIngredients AS PI 
+                        WHERE PI.productId = ".$prodId."
+                    ) AS prodIngr ON prodIngr.ingredientId = ingr.id
+                ORDER BY ingr.name";
 
     $queryIngr = mysqli_query($dbConx, $sqlIngr);
-
-    //$resIngr = mysqli_fetch_assoc($queryIngr);
 
 ?>
 <!DOCTYPE html>
@@ -192,7 +231,7 @@
                             
                             if($brandId == -1)
                             {
-                                echo '<option value="" hidden disabled selected value">Select Brands</option>';
+                                echo '<option value="" hidden disabled selected>Select Brands</option>';
                             }
 
                             if($queryAllBrands !== false)
@@ -206,15 +245,86 @@
                                     }
                                     echo '<option value="'.$resAllBrands["brandId"].'" '.$selected.'>'.$resAllBrands["brand"].'</option>';
                                 }
+                                mysqli_free_result($queryAllBrands);
                             }
                         ?>
                    </select>
                </div>
                <div class="error-message-container">
-                        <span id="errorBrand" class="error-message"></span>
+                    <span id="errorBrand" class="error-message"></span>
                 </div>
+
+                <h4 class="section">Product Ingredients</h4>
+                
+                <div id="errorQty" class="empty-message"></div>
+                <div class="scroll-container">                            
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col" style="text-align: center">
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th scope="col">Ingredient</th>
+                                <th scope="col" style="text-align: center;">Quantity/100g</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    while($resIngr = mysqli_fetch_assoc($queryIngr))
+                                    {
+                                        $checked  = (!empty($resIngr["quantity"])) ? "checked" : "";
+                                        $disabled = (!empty($resIngr["quantity"])) ? "" : "disabled";
+                                        
+                                        echo '<tr>
+                                                <td style="text-align: center">
+                                                    <input type="checkbox" class="ingr_list" name="ingr_list[]"  value="'.$resIngr["ingrId"].'" '.$checked.'>
+                                                </td>
+                                                <td>'.$resIngr["name"].'</td>
+                                                <td>
+                                                <input type="number" name="qty_'.$resIngr["ingrId"].'"  class="form-control form-control-sm quantity-input" value = "'.$resIngr["quantity"].'" '.$disabled.'>
+                                                </td>
+                                            </tr>';
+                                    }
+                                    mysqli_free_result($queryIngr);
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
             <input type="submit" class="button-save" value="Save" name="save">
             </form>
         </div>
+        <script>
+            //MAKE INPUT FIELD EDITABLE ON CHECK BOX CLICK
+            $(document).ready(function()
+            {
+                $(".ingr_list").click(function() 
+                {
+                    if ($(this).is(':checked')) 
+                    {
+                        $(this).parents('tr').children('td').children('input[type="number"]').removeAttr('disabled');
+                    } 
+                    else 
+                    {
+                        $(this).parents('tr').children('td').children('input[type="number"]').attr('disabled', 'disabled');
+                    }
+                })
+
+                //SELECT/UNSELECT INGREDIENT CHECKBOXES     
+                $("#selectAll").click(function()
+                {
+                    $('input:checkbox').prop('checked', this.checked);
+                
+                    if(this.checked)
+                    {
+                        $(".quantity-input").removeAttr('disabled');
+                    }    
+                    else
+                    {
+                        $(".quantity-input").attr('disabled', 'disabled');
+                    }
+                    
+                })
+            })
+    </script>
     </body>
 </html>

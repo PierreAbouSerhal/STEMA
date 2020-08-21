@@ -14,6 +14,12 @@
         case "PRD":
             $table = "products";
             break;
+        case "VAR":
+            $table = "variants";
+            break;
+        case "BRD":
+            $table = "productbrands";
+            break;
     }
 
     $sql       = "SELECT COUNT(*) AS rowNbr FROM ".$table." WHERE id = ".$id.";";

@@ -8,7 +8,7 @@
         header("Location: ../MainPHP/index.php");
         exit();
     }
-
+    $pageIdx = "ING";
     if(isset($_GET["id"]) && !empty($_GET["id"]))//EDIT INGREDIENT
     {
         $ingId = mysqli_real_escape_string($dbConx, $_GET["id"]);
@@ -46,7 +46,7 @@
                                      (is_numeric($sodium) || empty($sodium)) && (is_numeric($fiber) || empty($fiber)) && (is_numeric($alcohol) || empty($alcohol))
         )
         {
-            $sqlIngrCheck    = "SELECT COUNT(*) AS rowNbr FROM Ingredients WHERE id = ".$ingId;
+            $sqlIngrCheck    = "SELECT * ,COUNT(*) AS rowNbr FROM Ingredients WHERE id = ".$ingId;
             
             $queryIngrCheck  = mysqli_query($dbConx, $sqlIngrCheck);
             
@@ -54,7 +54,7 @@
             
             mysqli_free_result($queryIngrCheck);
 
-            $ingrImg = "";
+            $ingrImg = (empty($resIngrCheck["image"])) ? 'NULL' : '"'.$resIngrCheck["image"].'"';
             //UPLOAD THE IMAGE
             if(file_exists($_FILES['ingr-img']['tmp_name']) || is_uploaded_file($_FILES['ingr-img']['tmp_name']))
             {
@@ -79,7 +79,7 @@
                 if($uploadOk == 1)
                 {
                     move_uploaded_file($_FILES["ingr-img"]["tmp_name"], $target_file);
-                    $ingrImg = "/Stema/IngredientsPics/".basename($_FILES["ingr-img"]["name"]);
+                    $ingrImg = '"/Stema/IngredientsPics/'.basename($_FILES["ingr-img"]["name"]).'"';
                 }
             }
 
@@ -87,32 +87,18 @@
             $sqlIngr = $sqlNutri = $sqlAlrg = $sqlAdtv = "";
 
             if($resIngrCheck["rowNbr"] == 1)
-            {
-                if(empty($ingrImg))
-                {
-                    $sqlIngr = 'UPDATE ingredients SET name = "'.$ingrName.'"
-                                    WHERE ingredients.id = '.$ingId;
-                }
-                else
-                {
-                    $sqlIngr = 'UPDATE ingredients SET name = "'.$ingrName.'", image = "'.$ingrImg.'"
-                                    WHERE ingredients.id = '.$ingId;
-                }
+            { 
+                $sqlIngr = 'UPDATE ingredients SET name = "'.$ingrName.'", image = '.$ingrImg.'
+                                WHERE ingredients.id = '.$ingId;
+                
 
                 $queryIngr = mysqli_query($dbConx, $sqlIngr);
             }
             else
             {
-                if(empty($ingrImg))
-                {
-                    $sqlIngr = 'INSERT INTO ingredients (name)
-                                    VALUES ("'.$ingrName.'")';
-                }
-                else
-                {
-                    $sqlIngr = 'INSERT INTO ingredients (name, image)
-                                    VALUES ("'.$ingrName.'", "'.$ingrImg.'")';
-                }
+                $sqlIngr = 'INSERT INTO ingredients (name, image)
+                                VALUES ("'.$ingrName.'", '.$ingrImg.')';
+                
 
                 $queryIngr = mysqli_query($dbConx, $sqlIngr);
 
@@ -125,7 +111,7 @@
                 else
                 {
                     //FAILED TO INSERT INTO THE DATABASE
-                    header("Location: mngIngredients.php");
+                    header("Location: manage.php?idx=".$pageIdx);
                     exit();
                 }
             }
@@ -372,7 +358,7 @@
                         <label for="file-input">
                         <div class="upload-icon">
                             <img class="icon" src="<?php $src = (empty($arrGeneral["image"])) ? "https://image.flaticon.com/icons/png/128/61/61112.png" : $arrGeneral["image"]; echo $src?>">
-                            </div>
+                        </div>
                         </label>
                     <input id="file-input" type="file" name="ingr-img"/>
                     </div>

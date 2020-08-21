@@ -264,11 +264,14 @@ function validateIngrs()
             if (fuData.files && fuData.files[0]) 
             {
                 var size = fuData.files[0].size;
-                console.log(size);
                 if(size > 500000)
                 {
                     valid = false;
                     errorImage.innerHTML = "Image size is bigger than 500KB";
+                }
+                else
+                {
+                    errorImage.innerHTML = "";
                 }
             }
         }
@@ -303,17 +306,18 @@ function validateIngrs()
 function validateProds()
 {
     let valid = true;
+    let score = ["A", "B", "C", "D", "E"];
+    let qtyInputNbr = 0;
 
     //0 -->NAME; 1-->SCORE; 2-->INFO
     let inputs = document.getElementsByClassName("product");
-
+    let qtys   = document.getElementsByClassName("quantity-input");
+    
     let errorName  = document.getElementById("errorProduct0");
     let errorScore = document.getElementById("errorProduct1");
     let errorBrand = document.getElementById("errorBrand");
-
+    let errorQty   = document.getElementById("errorQty");
     let brand      = document.getElementById("brand");
-
-    let score = ["A", "B", "C", "D", "E"];
 
     if(inputs[0].value == "")
     {
@@ -367,6 +371,212 @@ function validateProds()
     if(brand.style.borderColor != "green")
     {
         valid = false;
+    }
+
+    for(let i = 0; i < qtys.length; i++)
+    {   
+        if(!qtys[i].disabled)
+        {
+            if(qtys[i].value == "")
+            {
+                qtys[i].style.borderColor = "red";
+                valid = false;
+            }
+            else
+            {
+                qtys[i].style.borderColor = "green";
+            }
+        }
+        else
+        {
+            qtyInputNbr++;
+            qtys[i].style.border = "1px solid #ced4da";
+        }
+    }
+
+    if(qtyInputNbr == qtys.length)
+    {
+        errorQty.innerHTML = "No ingredient is selected!";
+        valid = false;
+    }
+
+    return valid;
+}
+
+function validateVaris()
+{
+    let valid = true;
+
+    let variName   = document.getElementById("Name");
+    let variProd   = document.getElementById("productId");
+    let variVol    = document.getElementById("Volume");
+    let variBCode  = document.getElementById("BarCode");
+
+    let errorName  = document.getElementById("errorName");
+    let errorProd  = document.getElementById("errorProduct");
+    let errorVol   = document.getElementById("errorVolume");
+    let errorBCode = document.getElementById("errorBarCode");
+
+    let fuData1    = document.getElementById("file-input-image1");
+    let fuData2    = document.getElementById("file-input-image2");
+    let fuData3    = document.getElementById("file-input-image3");
+    
+    let errorImg1  = document.getElementById("errorImage1");
+    let errorImg2  = document.getElementById("errorImage2");
+    let errorImg3  = document.getElementById("errorImage3");
+
+    let fileUploadPath1 = fuData1.value;
+    let fileUploadPath2 = fuData2.value;
+    let fileUploadPath3 = fuData3.value;
+
+    if (fileUploadPath1 != '')
+    {
+        var extension = fileUploadPath1.substring(fileUploadPath1.lastIndexOf('.') + 1).toLowerCase();
+
+        if (extension == "jpg" || extension == "png" || extension == "jpeg" || extension == "gif") 
+        {
+            if (fuData1.files && fuData1.files[0]) 
+            {
+                var size = fuData1.files[0].size;
+                if(size > 500000)
+                {
+                    valid = false;
+                    errorImg1.innerHTML = "Image size is bigger than 500KB";
+                }
+                else
+                {
+                    errorImg1.innerHTML = "";
+                }
+            }
+        }
+        else 
+        {
+            valid = false;
+            errorImg1.innerHTML = "Photo only allows file types of JPG, PNG, JPEG, GIF";
+        }
+    }
+
+    if (fileUploadPath2 != '')
+    {
+        var extension = fileUploadPath2.substring(fileUploadPath2.lastIndexOf('.') + 1).toLowerCase();
+
+        if (extension == "jpg" || extension == "png" || extension == "jpeg" || extension == "gif") 
+        {
+            if (fuData2.files && fuData2.files[0]) 
+            {
+                var size = fuData2.files[0].size;
+                if(size > 500000)
+                {
+                    valid = false;
+                    errorImg2.innerHTML = "Image size is bigger than 500KB";
+                }
+                else
+                {
+                    errorImg2.innerHTML = "";
+                }
+            }
+        }
+        else 
+        {
+            valid = false;
+            errorImg2.innerHTML = "Photo only allows file types of JPG, PNG, JPEG, GIF";
+        }
+    }
+
+    if (fileUploadPath3 != '')
+    {
+        var extension = fileUploadPath3.substring(fileUploadPath3.lastIndexOf('.') + 1).toLowerCase();
+
+        if (extension == "jpg" || extension == "png" || extension == "jpeg" || extension == "gif") 
+        {
+            if (fuData3.files && fuData3.files[0]) 
+            {
+                var size = fuData3.files[0].size;
+                if(size > 500000)
+                {
+                    valid = false;
+                    errorImg3.innerHTML = "Image size is bigger than 500KB";
+                }
+                else
+                {
+                    errorImg3.innerHTML = "";
+                }
+            }
+        }
+        else 
+        {
+            valid = false;
+            errorImg3.innerHTML = "Photo only allows file types of JPG, PNG, JPEG, GIF";
+        }
+    }
+
+    if(variName.value == "")
+    {
+        variName.style.borderColor = "red";
+        errorName.innerHTML = "Variant Name is empty";
+        valid = false;
+    }
+    else
+    {
+        variName.style.borderColor = "green";
+        errorName.innerHTML = "";
+    }
+
+    if(variProd.value == "")
+    {
+        variProd.style.borderColor = "red";
+        errorProd.innerHTML = "Product is empty";
+        valid = false;
+    }
+    else
+    {
+        variProd.style.borderColor = "green";
+        errorProd.innerHTML = "";
+    }
+
+    if(variVol.value == "")
+    {
+        variVol.style.borderColor = "red";
+        errorVol.innerHTML = "Volume Name is empty";
+        valid = false;
+    }
+    else
+    {
+        variVol.style.borderColor = "green";
+        errorVol.innerHTML = "";
+    }
+
+    if(variBCode.value == "")
+    {
+        variBCode.style.borderColor = "red";
+        errorBCode.innerHTML = "Bar Code is empty";
+        valid = false;
+    }
+    else
+    {
+        variBCode.style.borderColor = "green";
+        errorBCode.innerHTML = "";
+    }
+
+    return valid;
+}
+
+function validateBrnds()
+{
+    let valid = true;
+    let brandName = document.getElementById("Name");
+    let errorName = document.getElementById("errorName");
+
+    if(brandName.value == "")
+    {
+        valid = false;
+        brandName.style.borderColor = "red";
+        errorName.innerHTML = "Brand name is empty";
+    }
+    else
+    {
+        brandName.style.borderColor = "green";
+        errorName.innerHTML = "";
     }
 
     return valid;

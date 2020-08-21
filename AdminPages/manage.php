@@ -8,9 +8,28 @@
         header("Location: ../MainPHP/index.php");
         exit();
     }
+    //PAGE INDEX
+    $pageIdx = "";
 
-    $phpSelf = $_SERVER["PHP_SELF"];
-    $placeHolder = "Search Products";
+    if(isset($_GET["idx"]))
+    {
+        $pageIdx = mysqli_real_escape_string($dbConx, $_GET["idx"]);
+    }
+
+    if($pageIdx != "ING" && $pageIdx != "PRD" && $pageIdx != "VAR" && $pageIdx != "BRD")
+    {
+        //REDIRECT TO INFO PAGE
+        header("Location: generalInfo.php");
+        exit();
+    }
+
+    //MANAGE ARRAYS
+    $arrPHolder = array("ING"=>"Ingredient",  "PRD"=>"Product",   "VAR"=>"Variant",   "BRD"=>"Brand");
+    $arrTable   = array("ING"=>"ingredients", "PRD"=>"products",  "VAR"=>"variants",  "BRD"=>"productbrands");
+    $arrPage    = array("ING"=>"ingrs.php",   "PRD"=>"prods.php", "VAR"=>"varis.php", "BRD"=>"brnds.php");
+
+    $phpSelf = $_SERVER["PHP_SELF"]."?idx=".$pageIdx;
+    $placeHolder = "Search ".$arrPHolder[$pageIdx];
 
     $fop = "true";
     $userInput = "";
@@ -18,13 +37,13 @@
     if(isset($_POST["userInput"]) && !empty($_POST["userInput"]))
     {
         $userInput = mysqli_escape_string($dbConx, $_POST["userInput"]);
-        $fop = "products.name LIKE '".$userInput."%'";
+        $fop = $arrTable[$pageIdx].".name LIKE '".$userInput."%'";
     }
 
-    $sqlSrch = "SELECT * 
-                FROM products
-                WHERE ".$fop.
-                " ORDER BY Name";
+    $sqlSrch = 'SELECT * 
+                FROM '.$arrTable[$pageIdx].'
+                WHERE '.$fop.'
+                 ORDER BY Name';
 
     $querySrch = mysqli_query($dbConx, $sqlSrch);
 
@@ -46,13 +65,12 @@
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <script src="../MainJs/header.js"></script>
     
-    <title>Manage Products</title>
+    <title>Manage <?php echo $arrPHolder[$pageIdx];?></title>
 </head>
 <body>
     <div class="container main-container">
         
         <?php 
-            $pageIdx = "PRD";
             include_once($_SERVER["DOCUMENT_ROOT"]."/Stema/MainElements/adminHeader.php");
             include_once($_SERVER["DOCUMENT_ROOT"]."/Stema/MainElements/searchBar.php");
         ?>
@@ -61,7 +79,7 @@
                 <thead>
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Product Name</th>
+                    <th scope="col"><?php echo $arrPHolder[$pageIdx];?> Name</th>
                     <th scope="col" style="text-align: center;">Options</th>
                     </tr>
                 </thead>
@@ -70,20 +88,20 @@
             $lineId = 0;
             while($resSrch = mysqli_fetch_assoc($querySrch))
             {
-                $prodId    = $resSrch["id"];
-                $prodName  = $resSrch["name"];
+                $mngId     = $resSrch["id"];
+                $mngName  = $resSrch["name"];
                 $lineId += 1;
 
                 echo '<tr>
                         <th scope="row">'.$lineId.'</th>
-                        <td>'.$prodName.'</td>
+                        <td>'.$mngName.'</td>
                         <td class="option-col">
-                            <a href="prods.php?isNew=0&id='.$prodId.'">
-                                <i class="far fa-edit" title="Edit Product"></i>
+                            <a href="'.$arrPage[$pageIdx].'?isNew=0&id='.$mngId.'">
+                                <i class="far fa-edit" title="Edit '.$arrPHolder[$pageIdx].'"></i>
                             </a>
-                            <a class= "detete-icon">
-                                <i id="prod_'.$prodId.'" class="far fa-trash-alt delete" title="Delete Product"></i>
-                            </a>
+                            <span class= "detete-icon">
+                                <i id="mng_'.$mngId.'" class="far fa-trash-alt delete" title="Delete '.$arrPHolder[$pageIdx].'"></i>
+                            </span>
                         </td>
                       </tr>';
             }
@@ -94,31 +112,33 @@
     </div>
 
     <script>
-        //REMOVE PRODUCT FROM DB AND UPDATE HTML 
+        //REMOVE VARIANT FROM DB AND UPDATE HTML 
         $(document).ready(function()
         {
             //DELETE 
             $('.delete').click(function()
             {
-                let idx     = "PRD";
+                let idx     = "<?php echo $pageIdx?>";
                 let el      = this;
                 let id      = this.id;
                 let splitid = id.split("_");
 
                 //IDS
-                let prodId = splitid[1];
-                
+                let mngId = splitid[1];
+                console.log(idx);
+                console.log(id);
+                console.log(mngId);
                 //AJAX REQUEST
                 $.ajax(
                 {
                     url: 'remove.php',
                     type: 'POST',
-                    data: { idx: idx ,id: prodId },
+                    data: { idx: idx ,id: mngId },
                     success: function(response)
                     {
                         if(response == 1)
                         {
-                            //REMOVE PRODUCT TR FROM HTML
+                            //REMOVE VARIANT TR FROM HTML
                             $(el).closest('tr').css('background','tomato');
                             $(el).closest('tr').fadeOut(800,function()
                             {
@@ -127,7 +147,7 @@
                         }
                         else
                         {
-                            alert("Unable to remove Ingredient!");
+                            alert("Unable to remove <?php echo $arrPHolder[$pageIdx];?>!");
                         }
                     }
                 });

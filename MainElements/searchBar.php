@@ -10,8 +10,14 @@
             case "ING":
                 $href = "ingrs.php";
                 break;
-            case "PRD";
+            case "PRD":
                 $href = "prods.php";
+                break;
+            case "VAR":
+                $href = "varis.php";
+                break;
+            case "BRD":
+                $href = "brnds.php";
                 break;
         }    
     ?>

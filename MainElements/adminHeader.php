@@ -7,19 +7,19 @@
         <a href="../AdminPages/generalInfo.php">General Info</a>
       </div>
       <div class="bottom-border">
-        <a href="../AdminPages/mngIngredients.php">Manage Ingredients</a>
+        <a href="../AdminPages/manage.php?idx=ING">Manage Ingredients</a>
       </div>
       <div class="bottom-border">
-        <a href="../AdminPages/mngProducts.php">Manage Products</a>
+        <a href="../AdminPages/manage.php?idx=PRD">Manage Products</a>
       </div>
       <div class="bottom-border">
-        <a href="#">Manage Variants</a>
+        <a href="../AdminPages/manage.php?idx=VAR">Manage Variants</a>
       </div>
       <div class="bottom-border">
-        <a href="#">Manage Brands</a>
+        <a href="../AdminPages/manage.php?idx=BRD">Manage Brands</a>
       </div>
       <div class="bottom-border">
-        <a href="../MainPHP/index.php">Go Back</a>
+        <a href="../MainPHP/index.php">Home Page</a>
       </div>
       
     </div>
