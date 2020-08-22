@@ -45,7 +45,7 @@
     white-space: nowrap;
 }
 
-.product-name{
+.prod-vari-name{
     position: absolute;
     font-weight: bold;
     display: block;
@@ -58,7 +58,7 @@
     left: 0;
 }
 
-.variant-name{
+.brand-name{
     position: absolute;
     font-style: italic;
     overflow: hidden;
@@ -94,7 +94,7 @@
 }
 
 @media screen and (min-width: 500px) {
-    .product-name{
+    .prod-vari-name{
         font-size: 1.4rem;
     }
 

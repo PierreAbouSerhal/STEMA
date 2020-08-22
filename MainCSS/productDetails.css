@@ -1,5 +1,7 @@
 .prod-name-container{
     display: flex;
+    position: relative;
+    overflow: hidden;
     height: 90px;
     font-size: 2rem;
     font-weight: bold;
@@ -8,6 +10,13 @@
     margin-top: 15px;
     border-top: 7px solid;
     border-bottom: 7px solid;
+}
+
+.heart-icon{
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+    min-width: 35px;
 }
 
 .border-a{
@@ -116,4 +125,14 @@
 .info{
     font-weight: bold;
     font-size: 1.2rem;
+}
+
+.popup{
+    position: fixed;
+    bottom: 0;
+    height: 25px;
+    font-size: 0.9rem;
+    text-align: center;
+    color: red;
+    background-color: rgb(209, 112, 85);
 }

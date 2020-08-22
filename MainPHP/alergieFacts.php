@@ -61,9 +61,13 @@
                         <div class="ingredient-header">
                         ';
 
-                        if(!empty($image))
+                        if(empty($image))
                         {
-                            echo '<img class="ingredient-img" src="../Images/Nutri-score-logo.png">';
+                            echo '<span class="ingredient-img"></span>';
+                        }
+                        else
+                        {
+                            echo '<img class="ingredient-img" src="'.$image.'">';
                         }
                     echo '<span class="ingredient-name">'.$name.'</span><span></span>
                         </div>

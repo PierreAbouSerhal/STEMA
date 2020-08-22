@@ -85,8 +85,8 @@
                     <span class="letter '.$color.'">'.$score.'</span>
                     <div class="names">
                         <a href="productDetails.php?variId='.$variId.'" style="color: black; text-decoration: none">
-                            <span class="product-name">'.$prodName.'</span>
-                            <span class="variant-name">'.$variName.' '.$vol.'</span>
+                            <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>
+                            <span class="brand-name">'.$brdName.' '.$vol.'</span>
                         </a>
                     </div>
                 </div>

@@ -17,7 +17,7 @@
     if(!$dbSuccess)
     {
         //CANNOT CONNECT TO MySQL SERVER OR TO DATABE
-        header("Location: ../MainHtml/errorPage.html");
+        header("Location: ../MainPHP/errorPage.php");
         exit();
     }
 ?>

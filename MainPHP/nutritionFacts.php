@@ -73,40 +73,44 @@
                         <div class="ingredient-header">
                         ';
 
-                        if(!empty($image))
-                        {
-                            echo '<img class="ingredient-img" src="../Images/Nutri-score-logo.png">';
-                        }
-                    echo '<span class="ingredient-name">'.$name.'</span><span></span>
-                        </div>
-
-                        <div class="nutrition-facts">'
-                        ;
-            
-                        foreach($row as $key => $value)
-                        {
-                            if($key != "name" && $key != "image" && !empty($value))
-                            {
-                                if($key == "Calories" || $key == "Fat" || $key == "Carbs")
-                                {
-                                    $style = 'style = "font-weight: bold"';
-                                }
-                                else
-                                {
-                                    $style = '';
-                                }
-                                echo '
-                                    <div class="fact">
-                                        <span '.$style.'>'.$key.'</span>
-                                        <span '.$style.'>'.$value.'</span>
-                                    </div>
-                                ';
-                            }
-                        }
-                echo '
-                        </div>
+                if(empty($image))
+                {
+                    echo '<span class="ingredient-img"></span>';
+                }
+                else
+                {
+                    echo '<img class="ingredient-img" src="'.$image.'">';
+                }                    
+                echo '<span class="ingredient-name">'.$name.'</span><span></span>
                     </div>
-                ';
+
+                    <div class="nutrition-facts">'
+                    ;
+        
+                    foreach($row as $key => $value)
+                    {
+                        if($key != "name" && $key != "image" && !empty($value))
+                        {
+                            if($key == "Calories" || $key == "Fat" || $key == "Carbs")
+                            {
+                                $style = 'style = "font-weight: bold"';
+                            }
+                            else
+                            {
+                                $style = '';
+                            }
+                            echo '
+                                <div class="fact">
+                                    <span '.$style.'>'.$key.'</span>
+                                    <span '.$style.'>'.$value.'</span>
+                                </div>
+                            ';
+                        }
+                    }
+            echo '
+                    </div>
+                </div>
+            ';
             }
 
             mysqli_free_result($query);

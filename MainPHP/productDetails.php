@@ -14,6 +14,7 @@
         $sql = "SELECT vari.image1,
                        vari.image2,
                        vari.image3,
+                       vari.name AS variName,
                        vari.productId AS prodId,
                        prod.name AS prodName,
                        prod.nutriscore AS score,
@@ -43,6 +44,7 @@
         $score  = $row["score"];
         $color  = strtolower($score);
         $info   = $row["info"];
+        $variName = $row["variName"];
 
         $qty = "(prodIngr.quantity / 100)";
 
@@ -89,6 +91,14 @@
         header("Location: index.php");
         exit();
     }
+
+    $sqlCheckFav = 'SELECT COUNT(*) AS rowNbr FROM favorites WHERE userId = '.$user["userId"].' AND variantId = '.$variId;
+
+    $queryCheckFav = mysqli_query($dbConx, $sqlCheckFav);
+
+    $resCheckFav = mysqli_fetch_assoc($queryCheckFav);
+
+    mysqli_free_result($queryCheckFav);
 ?>
 <!DOCTYPE html>
 <html>
@@ -101,6 +111,7 @@
 <link rel="stylesheet" type="text/css" href="../MainCss/index.css"/>
 <link rel="stylesheet" type="text/css" href="../MainCss/productDetails.css"/>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="../MainJs/header.js"></script>
 </head>
 <body>
@@ -119,22 +130,29 @@
   </form>
     
     <div class="prod-name-container border-<?php echo $color;?> background-<?php echo $color;?>">
-        <?php echo $prodName?>
+        <?php 
+            echo $prodName;
+            if($resCheckFav["rowNbr"] != 1)
+            {
+                echo '<img class="add heart-icon" id="fav_'.$variId.'" src="../StemaPics/heart-full.png" alt="add favorite" title="add favorite">';
+            }
+
+        ?>
     </div>
 
     <marquee behavior="scroll" direction="left" scrollamount="10">
         <?php
             if(!empty($image1))
             {
-                echo '<img src="../StemaPics/nutriscore-logo-home-page.png" width="125" height="82" alt="Flying Bat">';
+                echo '<img src="'.$image1.'" width="125" height="82" alt="'.$prodName.'">';
             }
             if(!empty($image2))
             {
-                echo '<img src="../StemaPics/nutriscore-logo-home-page.png" width="125" height="82" alt="Flying Bat">';
+                echo '<img src="'.$image2.'" width="125" height="82" alt="'.$prodName.'">';
             }
             if(!empty($image3))
             {
-                echo '<img src="../StemaPics/nutriscore-logo-home-page.png" width="125" height="82" alt="Flying Bat">';
+                echo '<img src="'.$image3.'" width="125" height="82" alt="'.$prodName.'">';
             }
         ?>
     </marquee>
@@ -220,9 +238,49 @@
         ?>
 
     </div>
+    
+    <div class="popup">
+            Some tesct
+    </div>
+
+    
 </div>
 
+<script>
+        //REMOVE FAVORITE FROM DB AND UPDATE HTML 
+        $(document).ready(function()
+        {
+            //DELETE 
+            $('.add').click(function()
+            {
+                let el = this;
+                let id = this.id;
+                let splitid = id.split("_");
+                let variName = '<?php echo $variName;?>';
+                //IDS
+                let variId = splitid[1];
+                let userId = <?php echo $user["userId"]?>;
 
+                //AJAX REQUEST
+                $.ajax(
+                {
+                    url: 'addFavorite.php',
+                    type: 'POST',
+                    data: { variId: variId, userId: userId },
+                    success: function(response)
+                    {
+                        if(response == 1)
+                        {
+                            $('.heart-icon').fadeOut(300, function()
+                            {
+                                $('.heart-icon').remove();
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html> 
