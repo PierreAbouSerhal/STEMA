@@ -126,13 +126,3 @@
     font-weight: bold;
     font-size: 1.2rem;
 }
-
-.popup{
-    position: fixed;
-    bottom: 0;
-    height: 25px;
-    font-size: 0.9rem;
-    text-align: center;
-    color: red;
-    background-color: rgb(209, 112, 85);
-}

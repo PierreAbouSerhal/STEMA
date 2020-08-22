@@ -238,12 +238,6 @@
         ?>
 
     </div>
-    
-    <div class="popup">
-            Some tesct
-    </div>
-
-    
 </div>
 
 <script>
