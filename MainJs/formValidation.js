@@ -199,6 +199,12 @@ function validateMyProfile()
         errorName.innerHTML = "";
     }
 
+    //ONLY UPFATE USER NAME
+    if(inputs[0].value != "" && inputs[1].value == "" && inputs[2].value == "" && inputs[3].value == "")
+    {
+        return valid;
+    }
+
     if(inputs[1].value != "")
     {
         inputs[1].style.borderColor = "green";

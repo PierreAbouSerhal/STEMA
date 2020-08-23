@@ -112,6 +112,12 @@
 
 .prop{
     font-weight: bold;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+.prop-info{
+    text-align: right;
 }
 
 @media screen and (min-width: 500px) {

@@ -41,8 +41,10 @@
         if(!empty($phone) && !empty($pass) && is_numeric($phone))
         {
             
-            $sql = "SELECT *, COUNT(*) AS rowNbr, role FROM users WHERE phone = ".$phone." AND password = '".$pass."';";
+            $sql = "SELECT *, COUNT(*) AS rowNbr FROM users WHERE phone = ".$phone." AND password = '".$pass."';";
+
             $query = mysqli_query($dbConx, $sql);
+
             $res = mysqli_fetch_assoc($query);
 
             mysqli_free_result($query);
@@ -79,29 +81,12 @@
             {   
                 $msg = "Wrong phone number or password, please try again.";
                 $status = "danger";
-
-                // NOTE: use password_verify in WEB3 proj
-                
-                /*CHECK PASSWORD
-                if(password_verify($pass, $res["password"]))
-                { CREATE SESSIONS AND COOKIE }
-                 else
-                 {
-                    $msg = "Wrong password, please try again.";
-                    $status = "danger";
-                 }*/
-                
             }
         }
     }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    include("../MainElements/doctype.html");
+?>
     <link rel="stylesheet" type="text/css" href="../MainCss/login.css" />
     <script src="../MainJs/formValidation.js"></script>
     <title>Log in</title>

@@ -9,30 +9,29 @@
         exit();
     }
 
-    $sql = "    SELECT 
-                    vari.id AS variId,
-                    vari.name AS variName,
-                    vari.volume AS vol,
-                    vari.image1 AS image1,
-                    prod.name AS prodName,
-                    prod.nutriscore AS score,
-                    brands.name AS brdName,
-                    history.viewDate AS date,
-                    history.viewTime AS time 
-                FROM (
-                        (
-                             variants AS vari JOIN history ON vari.id = history.variantId 
-                        ) 
-                        JOIN products AS prod ON vari.productId = prod.id 
-                     ) 
-                    JOIN productbrands AS brands ON brands.id = prod.brandId
-                WHERE 
-                    history.userId = ".$user["userId"]." 
-                ORDER BY 
-                    date DESC, 
-                    time DESC 
-                LIMIT 50 ;
-                ";
+    $sql = "SELECT 
+                vari.id AS variId,
+                vari.name AS variName,
+                vari.volume AS vol,
+                vari.image1 AS img1,
+                prod.name AS prodName,
+                prod.nutriscore AS score,
+                brands.name AS brdName,
+                history.viewDate AS date,
+                history.viewTime AS time 
+            FROM (
+                    (
+                            variants AS vari JOIN history ON vari.id = history.variantId 
+                    ) 
+                    JOIN products AS prod ON vari.productId = prod.id 
+                    ) 
+                JOIN productbrands AS brands ON brands.id = prod.brandId
+            WHERE 
+                history.userId = ".$user["userId"]." 
+            ORDER BY 
+                date DESC, 
+                time DESC 
+            LIMIT 50 ;";
 
     $query = mysqli_query($dbConx, $sql);
 
@@ -45,14 +44,9 @@
                 </div>
                 ';
     }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+    include("../MainElements/doctype.html");
+?>
     <link rel="stylesheet" type="text/css" href="../MainCss/header.css"/>
     <link rel="stylesheet" type="text/css" href="../MainCss/variants.css"/>
 
@@ -79,24 +73,25 @@
             {
                 while($row = mysqli_fetch_assoc($query))
                     {
-                        $variId = $row["variId"];
+                        $variId   = $row["variId"];
                         $variName = $row["variName"];
-                        $vol = $row["vol"];
-                        $image1 = $row["image1"];
+                        $vol      = $row["vol"];
                         $prodName = $row["prodName"];
-                        $score = $row["score"];
-                        $brdName = $row["brdName"];
-                        $date = $row["date"];
-                        $time = $row["time"];
-                        $color = strtolower($score);
+                        $score    = $row["score"];
+                        $brdName  = $row["brdName"];
+                        $date     = $row["date"];
+                        $time     = $row["time"];
+                        
+                        $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px" src="'.$row["img1"].'">' : '';
+                        $color    = strtolower($score);
 
                         echo '
-                            <div class="variant border-'.$color.'" style="height: 110px">
+                            <div class="variant border-'.$color.'" style="height: 110px" onclick="location.href = \'productDetails.php?variId='.$variId.'\';">
                                 <span class="letter '.$color.'">'.$score.'</span>
                                 <div class="names" style="height: 60px">
                                     <a href="productDetails.php?variId='.$variId.'" style="color: black; text-decoration: none">
-                                        <span class="product-name">'.$prodName.'</span>
-                                        <span class="variant-name">'.$variName.' '.$vol.'</span>
+                                        <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>
+                                        <span class="brand-name">'.$brdName.' '.$vol.'</span>
                                     </a>
                                 </div>
                                 <div class="date-time">
@@ -104,11 +99,11 @@
                                     <span>&nbsp</span>
                                     <span>At: '.$time.'</span>
                                 </div>
+                                '.$image.'
                             </div>
                         ';
                     }
-
-                    mysqli_free_result($query);
+                mysqli_free_result($query);
             }
         ?>
         </div> 

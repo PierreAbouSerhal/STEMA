@@ -37,6 +37,26 @@ function logout()
     session_destroy();
 }
 
+//REFRESH USERNAME FUNCTION (USED IN myProfile.php)
+function refreshName($dbConx, $user)
+{
+    $name = $_SESSION["userName"];
+
+    $sqlFetchName = "SELECT COUNT(*) AS rowNbr, name AS userName FROM users WHERE id = ".$user["userId"];
+
+    $queryFetchName = mysqli_query($dbConx, $sqlFetchName);
+
+    $resFetchName = mysqli_fetch_assoc($queryFetchName);
+
+    mysqli_free_result($queryFetchName);
+
+    if($resFetchName["rowNbr"] == 1)
+    {
+        $name = $resFetchName["userName"];
+        return $name;
+    }
+}
+
 if(isset($_SESSION["userToken"]) && isset($_SESSION["loggedin"]))
 {
     if($_SESSION["loggedin"])

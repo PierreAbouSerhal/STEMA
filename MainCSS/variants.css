@@ -4,6 +4,23 @@
     margin: 20px 20px 0px 20px;
 }
 
+.variant-wrapper-fav{
+    position: relative;
+    border-style: solid;
+    border-width: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.variant-fav{
+    display: flex;
+    position: relative;
+    align-items: center;
+    overflow: hidden;
+    height: 100px;
+    width: 85%; 
+}
+
 .variant{
     display: flex;
     position: relative;
@@ -14,6 +31,7 @@
     margin-bottom: 20px;
     height: 100px;
     width: 100%;
+    cursor: pointer;
 }
 
 .letter{
@@ -70,7 +88,11 @@
 
 .heart-icon{
     cursor: pointer;
-    min-width: 35px;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    right: 0;
+    bottom: 20px;
 }
 
 .empty-list{

@@ -9,7 +9,7 @@
     if(isset($_GET["variId"]) && !empty($_GET["variId"]))
     {
         $variId = mysqli_real_escape_string($dbConx, $_GET["variId"]);
-        
+
         //FETCH GENERAL INFO
         $sql = "SELECT vari.image1,
                        vari.image2,
@@ -29,6 +29,27 @@
         {
             header("Location: index.php");
             exit;
+        }
+        else
+        {
+            //ADD TO USER HISTORY
+            $sqlHist = "SELECT COUNT(*) AS rowNbr
+                        FROM history
+                        WHERE userId = ".$user["userId"]." AND variantId = ".$variId;
+
+            $queryHist = mysqli_query($dbConx, $sqlHist);
+
+            $resHist = mysqli_fetch_assoc($queryHist);
+
+            mysqli_free_result($queryHist);
+
+            if($resHist["rowNbr"] == 0)
+            {
+                $sqlAddHist = "INSERT INTO history (userId, variantId, viewDate, viewTime)
+                                    VALUES (".$user["userId"].", ".$variId.", CURDATE(), CURTIME())";
+                    
+                $queryAddHist = mysqli_query($dbConx, $sqlAddHist);
+            }
         }
         
         $row = mysqli_fetch_assoc($query);
@@ -85,6 +106,17 @@
                     WHERE prodIngr.productId = ".$prodId.";";
 
         $queryAdtv = mysqli_query($dbConx, $sqlAdtv);
+        
+        //CHECK IF IN FAVORITE LIST
+        $sqlCheckFav = 'SELECT COUNT(*) AS rowNbr 
+                        FROM favorites 
+                        WHERE userId = '.$user["userId"].' AND variantId = '.$variId;
+
+        $queryCheckFav = mysqli_query($dbConx, $sqlCheckFav);
+
+        $resCheckFav = mysqli_fetch_assoc($queryCheckFav);
+
+        mysqli_free_result($queryCheckFav);
     }
     else
     {
@@ -92,20 +124,9 @@
         exit();
     }
 
-    $sqlCheckFav = 'SELECT COUNT(*) AS rowNbr FROM favorites WHERE userId = '.$user["userId"].' AND variantId = '.$variId;
-
-    $queryCheckFav = mysqli_query($dbConx, $sqlCheckFav);
-
-    $resCheckFav = mysqli_fetch_assoc($queryCheckFav);
-
-    mysqli_free_result($queryCheckFav);
+    include("../MainElements/doctype.html");
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stema</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <link rel="stylesheet" type="text/css" href="../MainCss/header.css"/>
 <link rel="stylesheet" type="text/css" href="../MainCss/index.css"/>
@@ -124,7 +145,7 @@
   <form method="GET" action="searchRes.php">
     <div class="search-container">
       <input class="search-icon" type="submit" value="">
-      <input class="search-bar" type="text" placeholder="Start Typing..." name="userInput" value=<?php $inpt = (isset($_POST["userInput"])) ? $userInput : '""' ; echo $inpt?>>
+      <input class="search-bar" type="text" placeholder="Start Typing..." name="userInput">
       <img class="scan-icon" src="../StemaPics/scan-image.png" alt="Scan" onclick="window.location.replace('https:/\/localhost/STEMA/MainPhp/barcodeScanner.php')">
     </div>
   </form>

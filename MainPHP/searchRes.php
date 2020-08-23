@@ -15,6 +15,7 @@
                     vari.id AS variId,
                     vari.name AS variName,
                     vari.volume AS vol,
+                    vari.image1 AS img1,
                     prod.nutriscore AS score,
                     prod.name AS prodName,
                     brands.name AS brdName
@@ -34,13 +35,11 @@
         header("Location: index.php");
         exit();
     }
+    
+    include("../MainElements/doctype.html");
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Stema</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <link rel="stylesheet" type="text/css" href="../MainCss/header.css"/>
 <link rel="stylesheet" type="text/css" href="../MainCss/index.css"/>
@@ -58,7 +57,7 @@
   <form method="GET" action=<?php echo $_SERVER["PHP_SELF"] ?>>
     <div class="search-container">
       <input class="search-icon" type="submit" value="">
-      <input class="search-bar" type="text" placeholder="Start Typing..." name="userInput" value=<?php $inpt = (isset($_POST["userInput"])) ? $userInput : "" ; echo $inpt?>>
+      <input class="search-bar" type="text" placeholder="Start Typing..." name="userInput" value="<?php $inpt = (isset($_GET["userInput"])) ? $userInput : "" ; echo $inpt?>">
       <img class="scan-icon" src="../StemaPics/scan-image.png" alt="Scan" onclick="window.location.replace('https:/\/localhost/STEMA/MainPhp/barcodeScanner.php')">
     </div>
   </form>
@@ -70,27 +69,25 @@
         }
         while($row = mysqli_fetch_assoc($query))
         {
-            $variId = $row["variId"];
+            $variId   = $row["variId"];
             $variName = $row["variName"];
-            $vol = $row["vol"];
+            $vol      = $row["vol"];
             $prodName = $row["prodName"];
-            $score = $row["score"];
-            $brdName = $row["brdName"];
-            $color = strtolower($score);
+            $score    = $row["score"];
+            $brdName  = $row["brdName"];
 
-            //NOTE: MAYBE USE ANOTHER METHOD TO GO TO productDetails.php (currently using GET)
-
+            $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px" src="'.$row["img1"].'">' : '';
+            $color    = strtolower($score);
+            
             echo '  
-                <div class="variant border-'.$color.'">
+                <div class="variant border-'.$color.'" onclick="location.href = \'productDetails.php?variId='.$variId.'\';">
                     <span class="letter '.$color.'">'.$score.'</span>
                     <div class="names">
-                        <a href="productDetails.php?variId='.$variId.'" style="color: black; text-decoration: none">
-                            <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>
-                            <span class="brand-name">'.$brdName.' '.$vol.'</span>
-                        </a>
+                        <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>
+                        <span class="brand-name">'.$brdName.' '.$vol.'</span>
                     </div>
-                </div>
-            ';
+                    '.$image.'
+                </div>';
         }
 
         mysqli_free_result($query);

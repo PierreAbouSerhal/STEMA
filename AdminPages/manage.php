@@ -47,20 +47,14 @@
 
     $querySrch = mysqli_query($dbConx, $sqlSrch);
 
+    include("../MainElements/doctype.html");
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <script src="https://kit.fontawesome.com/3571b2f364.js" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" type="text/css" href="../MainCss/header.css"/>
     <link rel="stylesheet" type="text/css" href="../MainCss/searchBar.css"/>
     <link rel="stylesheet" type="text/css" href="../MainCss/manage.css"/>
 
+    <script src="https://kit.fontawesome.com/3571b2f364.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <script src="../MainJs/header.js"></script>

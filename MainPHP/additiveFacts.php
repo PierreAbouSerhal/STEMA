@@ -21,16 +21,11 @@
         ORDER BY ingr.name ;";
 
     $query = mysqli_query($dbConx, $sql);   
+
+    include("../MainElements/doctype.html");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Additive Facts</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="../MainCss/header.css"/>
     <link rel="stylesheet" type="text/css" href="../MainCss/facts.css"/>
@@ -78,19 +73,19 @@
                         <div class="adtv-facts">
                             <div class="adtv-prop">
                                 <span class="prop">Taste:</span>
-                                <span>'.$taste.'</span>
+                                <span class="prop-info">'.$taste.'</span>
                             </div>
                             <div class="adtv-prop">
                                 <span class="prop">Color:</span>
-                                <span>'.$color.'</span>
+                                <span class="prop-info">'.$color.'</span>
                             </div>
                             <div class="adtv-prop">
                                 <span class="prop">Health Risk:</span>
-                                <span>'.$risk.'</span>
+                                <span class="prop-info">'.$risk.'</span>
                             </div>
                             <div class="adtv-prop">
                                 <span class="prop">Formula:</span>
-                                <span>'.$frmla.'</span>
+                                <span class="prop-info">'.$frmla.'</span>
                             </div>
                         </div>
                     </div>

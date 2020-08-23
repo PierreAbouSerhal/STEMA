@@ -13,7 +13,7 @@
                 vari.id AS variId,
                 vari.name AS variName,
                 vari.volume AS vol,
-                vari.image1 AS image1,
+                vari.image1 AS img1,
                 prod.name AS prodName,
                 prod.nutriscore AS score,
                 brands.name AS brdName
@@ -39,13 +39,9 @@
                 </div>
                 ';
     }
+
+    include("../MainElements/doctype.html");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../MainCss/header.css"/>
@@ -74,28 +70,29 @@
             {
                 while($row = mysqli_fetch_assoc($query))
                     {
-                        $variId = $row["variId"];
+                        $variId   = $row["variId"];
                         $variName = $row["variName"];
-                        $vol = $row["vol"];
-                        $image1 = $row["image1"];
+                        $vol      = $row["vol"];
                         $prodName = $row["prodName"];
-                        $score = $row["score"];
-                        $brdName = $row["brdName"];
-                        $color = strtolower($score);
-
+                        $score    = $row["score"];
+                        $brdName  = $row["brdName"];
+                        
+                        $color    = strtolower($score);
+                        $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px" src="'.$row["img1"].'">' : '';
                         //NOTE: MAYBE USE ANOTHER METHOD TO GO TO productDetails.php (currently using GET)
 
                         echo '
-                            <div class="variant border-'.$color.'">
+                        <div class="variant-wrapper-fav border-'.$color.'">
+                            <div class="variant-fav" onclick="location.href = \'productDetails.php?variId='.$variId.'\';">
                                 <span class="letter '.$color.'">'.$score.'</span>
                                 <div class="names">
-                                    <a href="productDetails.php?variId='.$variId.'" style="color: black; text-decoration: none">
-                                        <span class="product-name">'.$prodName.'</span>
-                                        <span class="variant-name">'.$variName.' '.$vol.'</span>
-                                    </a>
+                                    <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>
+                                    <span class="brand-name">'.$brdName.' '.$vol.'</span>
                                 </div>
-                                <img class="delete heart-icon" id="fav_'.$variId.'" src="../StemaPics/heart-full.png" alt="remove" title="remove">
-                            </div>
+                                '.$image.'
+                            </div>        
+                            <img class="delete heart-icon" id="fav_'.$variId.'" src="../StemaPics/heart-full.png" alt="remove" title="remove">
+                        </div>
                         ';
                     }
 
