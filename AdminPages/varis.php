@@ -195,7 +195,7 @@
     }
     
     //PAGE TITLE
-    $title = (!empty($arrGeneral["Name"])) ? "Edit ".$arrGeneral["Name"] : "Add Ingredient";
+    $title = (!empty($arrGeneral["Name"])) ? "Edit ".$arrGeneral["Name"] : "Add Variants";
 
     mysqli_free_result($queryVari);
 

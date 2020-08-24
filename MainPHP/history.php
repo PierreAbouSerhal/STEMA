@@ -82,7 +82,7 @@
                         $date     = $row["date"];
                         $time     = $row["time"];
                         
-                        $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px" src="'.$row["img1"].'">' : '';
+                        $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px;margin-right:5px" src="'.$row["img1"].'">' : '';
                         $color    = strtolower($score);
 
                         echo '

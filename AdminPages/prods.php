@@ -275,7 +275,7 @@
                                                 </td>
                                                 <td>'.$resIngr["name"].'</td>
                                                 <td>
-                                                <input type="number" name="qty_'.$resIngr["ingrId"].'"  class="form-control form-control-sm quantity-input" value = "'.$resIngr["quantity"].'" '.$disabled.'>
+                                                <input type="number" name="qty_'.$resIngr["ingrId"].'"  class="form-control form-control-sm quantity-input" value = "'.$resIngr["quantity"].'" '.$disabled.' step="any">
                                                 </td>
                                             </tr>';
                                     }

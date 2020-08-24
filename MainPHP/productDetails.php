@@ -152,8 +152,8 @@
     
     <div class="prod-name-container border-<?php echo $color;?> background-<?php echo $color;?>">
         <?php 
-            echo $prodName;
-            if($resCheckFav["rowNbr"] != 1)
+            echo '<span class="prod-name">'.$prodName.'</span>';
+            if($resCheckFav["rowNbr"] == 0)
             {
                 echo '<img class="add heart-icon" id="fav_'.$variId.'" src="../StemaPics/heart-full.png" alt="add favorite" title="add favorite">';
             }
@@ -161,7 +161,7 @@
         ?>
     </div>
 
-    <marquee behavior="scroll" direction="left" scrollamount="10">
+    <marquee behavior="scroll" direction="left" scrollamount="10" style="margin-top:10px">
         <?php
             if(!empty($image1))
             {
@@ -275,7 +275,7 @@
                 //IDS
                 let variId = splitid[1];
                 let userId = <?php echo $user["userId"]?>;
-
+                console.log(userId);
                 //AJAX REQUEST
                 $.ajax(
                 {

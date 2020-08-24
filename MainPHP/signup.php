@@ -59,8 +59,8 @@
                     $usrPass = $usrPass1;
                     
                     //INSERT UNACTIVATED USER
-                    $sqlInsert = "INSERT INTO users (phone, name, email, password, activationCode) 
-                                        VALUES (".$usrPhone.", '".$usrName."', '".$usrEmail."', '".$usrPass."', '".$activCode."')";
+                    $sqlInsert = "INSERT INTO users (phone, name, email, password, activationCode, creationDate) 
+                                        VALUES (".$usrPhone.", '".$usrName."', '".$usrEmail."', '".$usrPass."', '".$activCode."', CURDATE())";
 
                     $queryInsert = mysqli_query($dbConx, $sqlInsert);
 

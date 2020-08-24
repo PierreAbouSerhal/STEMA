@@ -126,3 +126,16 @@
     color: red;
     height: 25px;
 }
+
+/*JQUERY DIALOG STYLE*/
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+.ui-widget-header{
+    border: none !important;
+}
+
+.ui-dialog-buttonpane{
+    border: none !important;
+}

@@ -81,13 +81,17 @@
     flex-direction: row;
 }
 
-.symptoms-container{
+.alrg-info-container{
     width: 50%;
+    height: 100%;
+}
+
+.rigt-border{
     border-right: solid black 1px;
 }
 
-.risks-container{
-    width: 50%;
+.left-border{
+    border-left: solid black 1px;
 }
 
 .sml-title{
@@ -100,7 +104,8 @@
 }
 
 .details{
-    text-align: center;
+    text-align: left;
+    padding: 0 5px 0 5px;
 }
 
 .adtv-prop{

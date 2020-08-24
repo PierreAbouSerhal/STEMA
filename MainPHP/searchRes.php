@@ -25,7 +25,7 @@
                     )
                     JOIN productbrands AS brands ON brands.id = prod.brandId
                 WHERE
-                    prod.name LIKE '".$userInput."%' OR vari.name LIKE '".$userInput."%' OR vari.barcode = '".$userInput."'  
+                    prod.name LIKE '%".$userInput."%' OR vari.name LIKE '%".$userInput."%' OR vari.barcode = '".$userInput."'  
                 ";
 
         $query = mysqli_query($dbConx, $sql);
@@ -76,7 +76,7 @@
             $score    = $row["score"];
             $brdName  = $row["brdName"];
 
-            $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px" src="'.$row["img1"].'">' : '';
+            $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px;margin-right:5px" src="'.$row["img1"].'">' : '';
             $color    = strtolower($score);
             
             echo '  

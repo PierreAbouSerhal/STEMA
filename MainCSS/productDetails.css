@@ -10,6 +10,14 @@
     margin-top: 15px;
     border-top: 7px solid;
     border-bottom: 7px solid;
+    
+}
+
+.prod-name{
+    text-overflow: ellipsis;
+    overflow: hidden;  
+    white-space: nowrap;
+    max-width: 80%;
 }
 
 .heart-icon{

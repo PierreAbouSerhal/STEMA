@@ -37,7 +37,7 @@
     if(isset($_POST["userInput"]) && !empty($_POST["userInput"]))
     {
         $userInput = mysqli_escape_string($dbConx, $_POST["userInput"]);
-        $fop = $arrTable[$pageIdx].".name LIKE '".$userInput."%'";
+        $fop = $arrTable[$pageIdx].".name LIKE '%".$userInput."%'";
     }
 
     $sqlSrch = 'SELECT * 
@@ -53,9 +53,12 @@
     <link rel="stylesheet" type="text/css" href="../MainCss/header.css"/>
     <link rel="stylesheet" type="text/css" href="../MainCss/searchBar.css"/>
     <link rel="stylesheet" type="text/css" href="../MainCss/manage.css"/>
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
 
     <script src="https://kit.fontawesome.com/3571b2f364.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <script src="../MainJs/header.js"></script>
     
@@ -83,7 +86,7 @@
             while($resSrch = mysqli_fetch_assoc($querySrch))
             {
                 $mngId     = $resSrch["id"];
-                $mngName  = $resSrch["name"];
+                $mngName   = $resSrch["name"];
                 $lineId += 1;
 
                 echo '<tr>
@@ -94,7 +97,7 @@
                                 <i class="far fa-edit" title="Edit '.$arrPHolder[$pageIdx].'"></i>
                             </a>
                             <span class= "detete-icon">
-                                <i id="mng_'.$mngId.'" class="far fa-trash-alt delete" title="Delete '.$arrPHolder[$pageIdx].'"></i>
+                                <i id="mng_'.$mngName.'_'.$mngId.'" class="far fa-trash-alt delete" title="Delete '.$arrPHolder[$pageIdx].'"></i>
                             </span>
                         </td>
                       </tr>';
@@ -106,7 +109,7 @@
     </div>
 
     <script>
-        //REMOVE VARIANT FROM DB AND UPDATE HTML 
+        //MESSAGEBOX + REMOVE VARIANT FROM DB AND UPDATE HTML
         $(document).ready(function()
         {
             //DELETE 
@@ -114,37 +117,67 @@
             {
                 let idx     = "<?php echo $pageIdx?>";
                 let el      = this;
-                let id      = this.id;
+                let id      = el.id;
                 let splitid = id.split("_");
+                let backClr = 'linear-gradient(90deg, rgb(3,129,66), rgb(133,187,47), rgb(255,204,3), rgb(238,129,0), rgb(230,62,17))';
 
-                //IDS
-                let mngId = splitid[1];
-                console.log(idx);
-                console.log(id);
-                console.log(mngId);
-                //AJAX REQUEST
-                $.ajax(
-                {
-                    url: 'remove.php',
-                    type: 'POST',
-                    data: { idx: idx ,id: mngId },
-                    success: function(response)
+                
+                //ID + NAME
+                let mngName = splitid[1];
+                let mngId   = splitid[2];
+
+                //MESSAGE BOX
+                $('<div></div>')
+                .appendTo('body')
+                .html('<div><h6>' + 'Are you sure you want to delete ' + mngName + '?</h6></div>')
+                .dialog({
+                    modal: true,
+                    title: 'Delete message',
+                    zIndex: 10000,
+                    autoOpen: true,
+                    width: 'auto',
+                    dialogClass: "no-close",
+                    resizable: false,
+                    draggable: false,
+                    buttons: 
                     {
-                        if(response == 1)
+                        Yes: function() 
                         {
-                            //REMOVE VARIANT TR FROM HTML
-                            $(el).closest('tr').css('background','tomato');
-                            $(el).closest('tr').fadeOut(800,function()
+                            //AJAX REQUEST
+                            $.ajax(
                             {
-                                $(this).remove();
+                                url: 'remove.php',
+                                type: 'POST',
+                                data: { idx: idx ,id: mngId },
+                                success: function(response)
+                                {
+                                    if(response == 1)
+                                    {
+                                        //REMOVE VARIANT TR FROM HTML
+                                        $(el).closest('tr').css('background','tomato');
+                                        $(el).closest('tr').fadeOut(800,function()
+                                        {
+                                            $(el).remove();
+                                        });
+                                    }
+                                    else
+                                    {
+                                        alert("Unable to remove " + mngName + "!");
+                                    }
+                                }
                             });
-                        }
-                        else
+                            $(this).dialog("close");
+                        },
+                        No: function() 
                         {
-                            alert("Unable to remove <?php echo $arrPHolder[$pageIdx];?>!");
+                            $(this).dialog("close");
                         }
+                    },
+                    close: function(event, ui) 
+                    {
+                        $(this).remove();
                     }
-                });
+                }).prev(".ui-dialog-titlebar").css("background",backClr).prev(".ui-dialog-titlebar").css("border", "none");
             });
         });
     </script>

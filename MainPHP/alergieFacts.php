@@ -42,14 +42,20 @@
         <div id="nav" class="CharacterContainer"></div>
 
         <?php
+            $borderStyle  = "";
+
             while($row = mysqli_fetch_assoc($query))
             {
                 $name  = $row["name"];
                 $image = $row["image"];
                 $symp  = $row["symp"];
                 $risk  = $row["risk"];
-                $id    = strtoupper($name[0]);
-
+                $id    = strtoupper($name[0]);      
+                
+                $sympClass = $riskClass = "alrg-info-container";
+                
+                (strlen($symp) > strlen($risk)) ? $sympClass = $sympClass. " rigt-border" : $riskClass = $riskClass." left-border";
+                
                 echo '
                     <div class="ingredient" id='.$id.'>
                         <div class="ingredient-header">
@@ -63,10 +69,11 @@
                         {
                             echo '<img class="ingredient-img" src="'.$image.'">';
                         }
+                    
                     echo '<span class="ingredient-name">'.$name.'</span><span></span>
                         </div>
                         <div class="alrg-facts">
-                            <div class="symptoms-container">
+                            <div class="'.$sympClass.'">
                                 <div class="sml-title">
                                     Symptoms
                                 </div>
@@ -74,7 +81,7 @@
                                     '.$symp.'
                                 </div>
                             </div>
-                            <div class="risks-container">
+                            <div class="'.$riskClass.'">
                                 <div class="sml-title">
                                     Health Risks
                                 </div>

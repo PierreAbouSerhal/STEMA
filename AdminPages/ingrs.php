@@ -142,13 +142,12 @@
             $fiber   = (empty($fiber)) ? "NULL": $fiber;
             $alcohol = (empty($alcohol)) ? "NULL": $alcohol;
 
-
             if($resIngrCheck["rowNbr"] == 1 && $resNutriCheck["rowNbr"] == 1)
             {
                 $sqlNutri = 'UPDATE nutritionalfacts SET calories = '.$cal.', fat = '.$fat.', saturatedFat = '.$sFat.',
                                     carbohydrate = '.$carbs.', sugar = '.$sugar.', protein = '.$protein.',
                                     sodium = '.$sodium.', fiber = '.$fiber.', alcohol = '.$alcohol.'
-                                WHERE nutritionalfacts.ingredientId = '.$ingId.';';
+                            WHERE nutritionalfacts.ingredientId = '.$ingId.';';
             }
             else if($resIngrCheck["rowNbr"] == 1 && $resNutriCheck["rowNbr"] == 0)
             {
@@ -159,9 +158,11 @@
             if($resIngrCheck["rowNbr"] == 1 && $resAlrgCheck["rowNbr"] == 1)
             {
                 $sqlAlrg = 'UPDATE alergiefacts SET symptoms = "'.$symptoms.'", healthRisk = "'.$riskAlrg.'"
-                                WHERE alergiefacts.ingredientId = '.$ingId.';';
+                            WHERE alergiefacts.ingredientId = '.$ingId.';';
             }
-            else if($resIngrCheck["rowNbr"] == 1 && $resAlrgCheck["rowNbr"] == 0)
+            else if($resIngrCheck["rowNbr"] == 1 && $resAlrgCheck["rowNbr"] == 0 &&
+                    (!empty($symptoms) || !empty($riskAlrg))
+                   )
             {
                 $sqlAlrg = 'INSERT INTO alergiefacts (ingredientId, symptoms, healthRisk) 
                                 VALUES ('.$ingId.', "'.$symptoms.'", "'.$riskAlrg.'")';
@@ -170,16 +171,20 @@
             if($resIngrCheck["rowNbr"] == 1 && $resAdtvCheck["rowNbr"] == 1)
             {
                 $sqlAdtv = 'UPDATE additivefacts SET taste = "'.$taste.'", color = "'.$color.'", healthRisk = "'.$riskAdtv.'", formula = "'.$formula.'"  
-                                WHERE additivefacts.ingredientId = '.$ingId.';';
+                            WHERE additivefacts.ingredientId = '.$ingId.';';
             }
-            else if($resIngrCheck["rowNbr"] == 1 && $resAdtvCheck["rowNbr"] == 0)
+            else if($resIngrCheck["rowNbr"] == 1 && $resAdtvCheck["rowNbr"] == 0 &&
+                    (!empty($taste) || !empty($color) || !empty($riskAdtv) || !empty($formula))
+                   )
             {
                 $sqlAdtv = 'INSERT INTO additivefacts (ingredientId, taste, color, healthRisk, formula)
                                 VALUES ('.$ingId.', "'.$taste.'", "'.$color.'", "'.$riskAdtv.'", "'.$formula.'")';
             }
-            $queryNutri = mysqli_query($dbConx, $sqlNutri);
-            $queryAlrg  = mysqli_query($dbConx, $sqlAlrg);
-            $queryAdtv  = mysqli_query($dbConx, $sqlAdtv);
+            
+            $queryNutri = (!empty($sqlNutri)) ? mysqli_query($dbConx, $sqlNutri) : "";
+            $queryAlrg  = (!empty($sqlAlrg))  ? mysqli_query($dbConx, $sqlAlrg)  : "";
+            $queryAdtv  = (!empty($sqlAdtv))  ? mysqli_query($dbConx, $sqlAdtv)  : "";
+
         }
     }
 
