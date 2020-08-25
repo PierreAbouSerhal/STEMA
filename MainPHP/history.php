@@ -10,21 +10,16 @@
     }
 
     $sql = "SELECT 
-                vari.id AS variId,
-                vari.name AS variName,
-                vari.volume AS vol,
-                vari.image1 AS img1,
+                prod.id AS prodId,
                 prod.name AS prodName,
                 prod.nutriscore AS score,
                 brands.name AS brdName,
                 history.viewDate AS date,
                 history.viewTime AS time 
-            FROM (
-                    (
-                            variants AS vari JOIN history ON vari.id = history.variantId 
-                    ) 
-                    JOIN products AS prod ON vari.productId = prod.id 
-                    ) 
+            FROM 
+                (
+                    products AS prod JOIN history ON prod.id = history.productId 
+                )
                 JOIN productbrands AS brands ON brands.id = prod.brandId
             WHERE 
                 history.userId = ".$user["userId"]." 
@@ -73,33 +68,27 @@
             {
                 while($row = mysqli_fetch_assoc($query))
                     {
-                        $variId   = $row["variId"];
-                        $variName = $row["variName"];
-                        $vol      = $row["vol"];
+                        $prodId   = $row["prodId"];
                         $prodName = $row["prodName"];
                         $score    = $row["score"];
                         $brdName  = $row["brdName"];
                         $date     = $row["date"];
                         $time     = $row["time"];
                         
-                        $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px;margin-right:5px" src="'.$row["img1"].'">' : '';
                         $color    = strtolower($score);
 
                         echo '
-                            <div class="variant border-'.$color.'" style="height: 110px" onclick="location.href = \'productDetails.php?variId='.$variId.'\';">
+                            <div class="variant border-'.$color.'" style="height: 110px" onclick="location.href = \'productDetails.php?prodId='.$prodId.'\';">
                                 <span class="letter '.$color.'">'.$score.'</span>
                                 <div class="names" style="height: 60px">
-                                    <a href="productDetails.php?variId='.$variId.'" style="color: black; text-decoration: none">
-                                        <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>
-                                        <span class="brand-name">'.$brdName.' '.$vol.'</span>
-                                    </a>
+                                        <span class="prod-vari-name">'.$prodName.'</span>
+                                        <span class="brand-name">'.$brdName.'</span>
                                 </div>
                                 <div class="date-time">
                                     <span>Seen in: '.$date.'</span>
                                     <span>&nbsp</span>
                                     <span>At: '.$time.'</span>
                                 </div>
-                                '.$image.'
                             </div>
                         ';
                     }

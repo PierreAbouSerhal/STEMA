@@ -16,6 +16,7 @@
                     vari.name AS variName,
                     vari.volume AS vol,
                     vari.image1 AS img1,
+                    prod.id AS prodId,
                     prod.nutriscore AS score,
                     prod.name AS prodName,
                     brands.name AS brdName
@@ -72,6 +73,7 @@
             $variId   = $row["variId"];
             $variName = $row["variName"];
             $vol      = $row["vol"];
+            $prodId   = $row["prodId"];
             $prodName = $row["prodName"];
             $score    = $row["score"];
             $brdName  = $row["brdName"];
@@ -80,7 +82,7 @@
             $color    = strtolower($score);
             
             echo '  
-                <div class="variant border-'.$color.'" onclick="location.href = \'productDetails.php?variId='.$variId.'\';">
+                <div class="variant border-'.$color.'" onclick="location.href = \'productDetails.php?prodId='.$prodId.'&variId='.$variId.'\';">
                     <span class="letter '.$color.'">'.$score.'</span>
                     <div class="names">
                         <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>

@@ -19,24 +19,23 @@
 
     $queryAll = mysqli_query($dbConx, $sqlAll);
 
-    $sqlFav = "SELECT fav.variantId, 
-                      vari.name,
-                      vari.image1, 
-                      COUNT(fav.variantId) AS rowNbr
+    $sqlFav = "SELECT fav.productId, 
+                      prod.name,
+                      COUNT(fav.productId) AS rowNbr
                FROM favorites AS fav
-               JOIN variants AS vari ON vari.id = fav.variantId
-               GROUP BY fav.variantId
+               JOIN products AS prod ON prod.id = fav.productId
+               GROUP BY fav.productId
                ORDER BY rowNbr DESC 
                LIMIT 1 ;";
 
     $queryFav = mysqli_query($dbConx, $sqlFav);
 
-    $sqlView = "SELECT hist.variantId,
-                       vari.name, 
-                       COUNT(hist.variantId) AS rowNbr
+    $sqlView = "SELECT hist.productId,
+                       prod.name, 
+                       COUNT(hist.productId) AS rowNbr
                 FROM history AS hist
-                JOIN variants AS vari ON vari.id = hist.variantId
-                GROUP BY hist.variantId
+                JOIN products AS prod ON prod.id = hist.productId
+                GROUP BY hist.productId
                 ORDER BY rowNbr DESC 
                 LIMIT 1 ;";
 

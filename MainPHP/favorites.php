@@ -10,23 +10,17 @@
     }
 
     $sql = "SELECT
-                vari.id AS variId,
-                vari.name AS variName,
-                vari.volume AS vol,
-                vari.image1 AS img1,
+                prod.id AS prodId,
                 prod.name AS prodName,
                 prod.nutriscore AS score,
                 brands.name AS brdName
-            FROM (  
-                    ( 
-                        variants AS vari JOIN favorites AS fav ON vari.id = fav.variantId 
-                    )
-                    JOIN products AS prod ON vari.productId = prod.id 
-                    ) 
+            FROM
+                (
+                    products AS prod JOIN favorites AS fav ON prod.id = fav.productId
+                ) 
                 JOIN productbrands AS brands ON brands.id = prod.brandId 
             WHERE 
-                fav.userId = ".$user["userId"]." ;
-    ";
+                fav.userId = ".$user["userId"].";";
 
     $query = mysqli_query($dbConx, $sql);
 
@@ -70,32 +64,26 @@
             {
                 while($row = mysqli_fetch_assoc($query))
                     {
-                        $variId   = $row["variId"];
-                        $variName = $row["variName"];
-                        $vol      = $row["vol"];
+                        $prodId   = $row["prodId"];
                         $prodName = $row["prodName"];
                         $score    = $row["score"];
                         $brdName  = $row["brdName"];
                         
                         $color    = strtolower($score);
-                        $image    = (!empty($row["img1"])) ? '<img style="height:50px;width:50px" src="'.$row["img1"].'">' : '';
-                        //NOTE: MAYBE USE ANOTHER METHOD TO GO TO productDetails.php (currently using GET)
 
                         echo '
                         <div class="variant-wrapper-fav border-'.$color.'">
-                            <div class="variant-fav" onclick="location.href = \'productDetails.php?variId='.$variId.'\';">
+                            <div class="variant-fav" onclick="location.href = \'productDetails.php?prodId='.$prodId.'\';">
                                 <span class="letter '.$color.'">'.$score.'</span>
                                 <div class="names">
-                                    <span class="prod-vari-name">'.$prodName.' '.$variName.'</span>
-                                    <span class="brand-name">'.$brdName.' '.$vol.'</span>
+                                    <span class="prod-vari-name">'.$prodName.'</span>
+                                    <span class="brand-name">'.$brdName.'</span>
                                 </div>
-                                '.$image.'
                             </div>        
-                            <img class="delete heart-icon" id="fav_'.$variId.'" src="../StemaPics/heart-full.png" alt="remove" title="remove">
+                            <img class="delete heart-icon" id="fav_'.$prodId.'" src="../StemaPics/heart-full.png" alt="remove" title="remove">
                         </div>
                         ';
                     }
-
                     mysqli_free_result($query);
             }
         ?>
@@ -115,7 +103,7 @@
                 let splitid = id.split("_");
 
                 //IDS
-                let variId = splitid[1];
+                let prodId = splitid[1];
                 let userId = <?php echo $user["userId"]?>;
 
                 //AJAX REQUEST
@@ -123,7 +111,7 @@
                 {
                     url: 'removeFavorite.php',
                     type: 'POST',
-                    data: { variId: variId, userId: userId },
+                    data: { prodId: prodId, userId: userId },
                     success: function(response)
                     {
                         if(response == 1)

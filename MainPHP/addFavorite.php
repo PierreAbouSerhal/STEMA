@@ -1,12 +1,12 @@
 <?php
     include_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/PhpUtils/dbConx.php");
     
-    $variId = mysqli_real_escape_string($dbConx, $_POST["variId"]);
+    $prodId = mysqli_real_escape_string($dbConx, $_POST["prodId"]);
     $userId = mysqli_real_escape_string($dbConx, $_POST["userId"]);
 
     
-    $sqlAdd = 'INSERT INTO favorites (userId, variantId)
-                    VALUES('.$userId.', '.$variId.')';
+    $sqlAdd = 'INSERT INTO favorites (userId, productId)
+                    VALUES('.$userId.', '.$prodId.')';
 
     $queryAdd = mysqli_query($dbConx, $sqlAdd);
     
