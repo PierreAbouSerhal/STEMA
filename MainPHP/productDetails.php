@@ -155,7 +155,7 @@
             echo '<span class="prod-name">'.$prodName.'</span>';
             if($resCheckFav["rowNbr"] == 0)
             {
-                echo '<img class="add heart-icon" id="fav_'.$variId.'" src="../StemaPics/heart-full.png" alt="add favorite" title="add favorite">';
+                echo '<img class="add heart-icon" id="fav_'.$variId.'" src="../StemaPics/heart-empty.png" alt="add favorite" title="add favorite">';
             }
 
         ?>

@@ -363,7 +363,7 @@
                     <input id="file-input" type="file" name="ingr-img"/>
                     </div>
                 </div>
-                <h4 class="section">Nutritional Info.</h4>
+                <h4 class="section">Nutritional Info/100g</h4>
             <?php
                 $nutriNbr = 0; //NUTRI FACT INPUT NUMBER
 
