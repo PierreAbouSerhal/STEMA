@@ -262,12 +262,13 @@
 </div>
 
 <script>
-        //REMOVE FAVORITE FROM DB AND UPDATE HTML 
+        //ADD FAVORITE TO DB AND UPDATE HTML 
         $(document).ready(function()
         {
-            //DELETE 
+            //ADD 
             $('.add').click(function()
             {
+                $(this).attr("src", "../StemaPics/heart-full.png");
                 let el = this;
                 let id = this.id;
                 let splitid = id.split("_");
@@ -275,7 +276,7 @@
                 //IDS
                 let variId = splitid[1];
                 let userId = <?php echo $user["userId"]?>;
-                console.log(userId);
+                
                 //AJAX REQUEST
                 $.ajax(
                 {
