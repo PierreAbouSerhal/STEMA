@@ -1,5 +1,5 @@
 <?php
-    session_set_cookie_params(0, "/", "localhost", true, true);
+    session_set_cookie_params(0, "/", "localhost", false, true);
     session_start();
     
     if(isset($_SESSION["userToken"]) || isset($_COOKIE["userToken"]))
@@ -72,7 +72,7 @@
                 $_SESSION["userToken"] = $token;
 
                 //CREATE THE COOKIES
-                setcookie("userToken", $token, time() + ( 100 * 30 * 24 * 60 * 60 ), "/", "localhost", true, true);
+                setcookie("userToken", $token, time() + ( 100 * 30 * 24 * 60 * 60 ), "/", "localhost", false, true);
 
                 header("Location: index.php");
                 exit();

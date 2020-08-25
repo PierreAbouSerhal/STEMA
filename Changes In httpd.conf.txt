@@ -1,0 +1,3 @@
+"Options Indexes FollowSymLinks ExecCGI" is changed to :
+
+"Options FollowSymLinks ExecCGI"

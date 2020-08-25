@@ -1,9 +1,9 @@
 <?php
-session_set_cookie_params(0, "/", "localhost", true, true);
+session_set_cookie_params(0, "/", "localhost", false, true);
 session_start();
 include_once($_SERVER["DOCUMENT_ROOT"]."/STEMA/PhpUtils/dbConx.php");
 
-$user = array("userId" => "", "userOk" => false);
+$user      = array("userId" => "", "userOk" => false);
 $userPhone = "";
 $userEmail = "";
 $userName  = "";

@@ -1,5 +1,5 @@
 <?php
-    session_set_cookie_params(0, "/", "localhost", true, true);
+    session_set_cookie_params(0, "/", "localhost", false, true);
     session_start();
     
     if(isset($_SESSION["userToken"]) || isset($_COOKIE["userToken"]))
