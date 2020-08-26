@@ -46,7 +46,7 @@
                 $activCode = activationCode();
 
                 $subject = "Verification Email";
-                $html = '<h1>Hi '.$usrName.'</h1><p>Thanks for getting started with Stema! Please click on the link below to confirm your email address: <a href ="https://localhost/STEMA/MainPhp/activate.php?activCode='.$activCode.'">https://localhost/STEMA/MainPhp/activate.php?activCode='.$activCode.'"</a></p>
+                $html = '<h1>Hi '.$usrName.'</h1><p>Thanks for getting started with Stema! Please click on the link below to confirm your email address: <a href ="http://localhost/STEMA/MainPhp/activate.php?activCode='.$activCode.'">http://localhost/STEMA/MainPhp/activate.php?activCode='.$activCode.'"</a></p>
                 <p>If you have problems, please paste the above link into your web browser</p>
                 <p>Thanks,<p/>
                 <p>Stema Support</p>';

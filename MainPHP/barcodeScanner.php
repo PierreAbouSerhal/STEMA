@@ -83,7 +83,7 @@ if(!$user["userOk"])
               if (result) {
                 console.log(result.text);
                 document.getElementById('result').textContent = result.text;
-                window.location.replace("https://localhost/STEMA/MainPhp/searchRes.php?userInput="+result.text);
+                window.location.replace("http://localhost/STEMA/MainPhp/searchRes.php?userInput="+result.text);
               }
               if (err && !(err instanceof ZXing.NotFoundException)) {
                 console.error(err)

@@ -26,7 +26,7 @@ include("../MainElements/doctype.html");
     <div class="search-container">
       <input class="search-icon" type="submit" value="">
       <input class="search-bar" type="text" placeholder="Start Typing..." name="userInput">
-      <img class="scan-icon" src="../StemaPics/scan-image.png" alt="Scan" onclick="window.location.replace('https:/\/localhost/STEMA/MainPhp/barcodeScanner.php')">
+      <img class="scan-icon" src="../StemaPics/scan-image.png" alt="Scan" onclick="window.location.replace('http:/\/localhost/STEMA/MainPhp/barcodeScanner.php')">
     </div>
   </form>
 
