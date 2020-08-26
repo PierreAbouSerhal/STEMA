@@ -38,7 +38,7 @@
         {
             foreach($_POST["ingr_list"] as $ingrId)
             {
-                if(empty($_POST["qty_".$ingrId]))
+                if(empty($_POST["qty_".$ingrId]) || !is_numeric($_POST["qty_".$ingrId]))
                 {
                     $save = false;
                     break;
