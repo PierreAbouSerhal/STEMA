@@ -57,6 +57,11 @@
 
                 //HASH THE USER TOKEN
                 $tokenHash = hash("sha256",$token);
+                
+                //DELETE TOKEN IF EXISTS
+                $sqlDelete = "DELETE FROM userTokens WHERE userId = ".$res["id"];
+
+                $queryDelete = mysqli_query($dbConx, $sqlDelete);
 
                 //INSERT THE HASHED TOKEN INTO THE DATABASE
                 $sqlInsert = "INSERT INTO userTokens (userId, hashedToken, creationDate, creationTime)
