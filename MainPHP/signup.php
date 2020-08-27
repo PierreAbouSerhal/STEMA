@@ -13,7 +13,7 @@
     }
 
     //INPUT VALIDATION
-    if(isset($_POST["userName"]) && isset($_POST["userPhone"]) && isset($_POST["userEmail"]) && isset($_POST["userPass1"]) && isset($_POST["userPass2"]))
+    if(isset($_POST["signup"]))
     {
         include_once($_SERVER["DOCUMENT_ROOT"]."/Stema/PhpUtils/dbConx.php");
 
@@ -105,11 +105,6 @@
                             $status ="danger";
                         }
                     }
-                    else
-                    {
-                        $msq = "Error in sql Update";
-                        $status = "danger";
-                    }
                 }
                 else // ACCOUNTS WITH SAME PHONE NUMBER OR EMAIL ARE FOUND
                 {
@@ -175,7 +170,7 @@
                 <small id="errorPass2" class="form-text"></small>
             </div>
         </div>
-        <button type="submit" class="btn">Sign Up</button>
+        <button type="submit" class="btn" name="signup">Sign Up</button>
         <div class="sign-up">
             <a href="login.php">I already have an account</a>
         </div>       
