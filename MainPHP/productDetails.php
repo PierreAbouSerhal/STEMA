@@ -4,6 +4,7 @@
     if(!$user["userOk"])
     {//AUTOMATIC LOGOUT
       logout();
+      $user["userId"] = -1;
     }
     
     if(isset($_GET["prodId"]) && !empty($_GET["prodId"]))
